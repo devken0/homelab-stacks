@@ -1,0 +1,181 @@
+---
+version: "3.8"
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TIMEZONE
+#      - PASSWORD=password #optional
+#      - HASHED_PASSWORD= #optional
+#      - SUDO_PASSWORD=password #optional
+#      - SUDO_PASSWORD_HASH= #optional
+#      - PROXY_DOMAIN=code-server.my.domain #optional
+#      - DEFAULT_WORKSPACE=/config/workspace #optional
+    volumes:
+      - code-server_data:/config
+#    ports:
+#      - 8443:8443
+    restart: unless-stopped
+  remmina:
+    image: lscr.io/linuxserver/remmina:latest
+    container_name: remmina
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TIMEZONE
+    volumes:
+      - remmina_data:/config
+#    ports:
+#      - 3000:3000
+#      - 3001:3001
+    restart: unless-stopped
+  changedetection.io:
+    image: lscr.io/linuxserver/changedetection.io:latest
+    container_name: changedetection
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TIMEZONE
+      - BASE_URL= #optional
+      - PLAYWRIGHT_DRIVER_URL= #optional
+    volumes:
+      - changedetection_data:/config
+#    ports:
+#      - 5000:5000
+    restart: unless-stopped
+  linkding:
+    container_name: linkding
+    image: sissbruecker/linkding:latest
+#    ports:
+#      - 9090:9090  
+    environment:
+      LD_SUPERUSER_NAME: $LD_SUPERUSER_NAME
+      LD_SUPERUSER_PASSWORD: $LD_SUPERUSER_PASSWORD
+      LD_DISABLE_URL_VALIDATION: True
+    volumes:
+      - "linkding_data:/etc/linkding/data"
+    restart: unless-stopped
+  glances:
+    container_name: glances
+#    ports:
+#      - 61208-61209:61208-61209
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - GLANCES_OPT=-w
+    restart: always
+    pid: host
+    image: nicolargo/glances
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+#    ports:
+#      - 9999:8080
+    restart: unless-stopped
+  npm:
+    image: jc21/nginx-proxy-manager:latest
+    restart: always
+    container_name: npm
+    ports:
+      - 80:80 # Public HTTP Port
+      - 443:443 # Public HTTPS Port
+      - 81:81 # Comment out after creating a proxy host for the service
+    environment:
+      DISABLE_IPV6: "true"
+    volumes:
+      - nginxproxymanager_data:/data
+      - nginxproxymanager_letsencrypt:/etc/letsencrypt
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+    restart: unless-stopped
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+#      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+    environment:
+      TZ: '$TIMEZONE'
+      WEBPASSWORD: $PIHOLE_WEBPASSWORD 
+      DNSMASQ_LISTENING: all
+      PUID: $PUID 
+      PGID: $PGID
+#      DNSMASQ_USER: root
+    # Volumes store your data between container upgrades
+    volumes:
+      - 'pihole_data:/etc/pihole'
+      - 'pihole_dnsmasq_data:/etc/dnsmasq.d'
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+#    cap_add:
+#      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+    restart: always
+  ddns-updater:
+    image: qmcgaw/ddns-updater
+    container_name: ddns-updater
+    #network_mode: bridge
+    #ports:
+    #  - 8000:8000/tcp
+    volumes:
+      - ddns-updater_data:/updater/data
+    environment:
+      - CONFIG=
+      - PERIOD=5m
+      - UPDATE_COOLDOWN_PERIOD=5m
+      - PUBLICIP_FETCHERS=all
+      - PUBLICIP_HTTP_PROVIDERS=all
+      - PUBLICIPV4_HTTP_PROVIDERS=all
+      - PUBLICIPV6_HTTP_PROVIDERS=all
+      - PUBLICIP_DNS_PROVIDERS=all
+      - PUBLICIP_DNS_TIMEOUT=3s
+      - HTTP_TIMEOUT=10s
+
+      # Web UI
+      - LISTENING_ADDRESS=:8000
+      - ROOT_URL=/
+
+      # Backup
+#      - BACKUP_PERIOD=24h # 0 to disable
+#      - BACKUP_DIRECTORY=/updater/data
+      # Other
+      - LOG_LEVEL=info
+      - LOG_CALLER=hidden
+#      - SHOUTRRR_ADDRESSES=ntfy://ntfy.minihomebox.duckdns.org/ddns_updates
+      - PUID=$PUID
+      - PGID=$PGID
+    restart: always
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=$PUID
+      - PGID=$PGID
+      - TZ=$TIMEZONE
+    volumes:
+      - heimdall_data:/config
+#    ports:
+#      - 8080:80
+#      - 8443:443
+    restart: unless-stopped
+volumes:
+  heimdall_data:
+  nginxproxymanager_data:
+  nginxproxymanager_letsencrypt:
+  ddns-updater_data:
+  pihole_data:
+  pihole_dnsmasq_data:
+  code-server_data:
+  remmina_data:
+  changedetection_data:
+  linkding_data:
