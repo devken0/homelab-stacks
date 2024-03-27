@@ -110,9 +110,9 @@ services:
       TZ: '$TIMEZONE'
       WEBPASSWORD: $PIHOLE_WEBPASSWORD 
       DNSMASQ_LISTENING: all
-      PUID: $PUID 
-      PGID: $PGID
-#      DNSMASQ_USER: root
+#     PUID: $PUID 
+#     PGID: $PGID
+      DNSMASQ_USER: root
     # Volumes store your data between container upgrades
     volumes:
       - 'pihole_data:/etc/pihole'
