@@ -7,8 +7,10 @@ services:
     #ports:
     #  - 5005:80
     volumes:
-      - ${DOCKER_PATH}/wbo:/opt/app/server-data" 
+      - ${DOCKER_PATH}/web-services/wbo:/opt/app/server-data" 
     restart: unless-stopped
+    networks:
+      - netsec_proxy-net
   picoshare:
     image: mtlynch/picoshare
     container_name: picoshare

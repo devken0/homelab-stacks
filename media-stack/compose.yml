@@ -88,8 +88,8 @@ services:
     volumes:
       - ${DOCKER_PATH}/media/deluge:/config
       - ${DOWNLOADS_PATH}/torrents:/downloads
-    ports:
-#      - 8112:8112
+    #ports:
+    #  - 8112:8112
       - 6881:6881
       - 6881:6881/udp
       - 58846:58846 #optional
@@ -129,8 +129,8 @@ services:
       - ${DOCKER_PATH}/media/bazaarr:/config
       - ${MEDIA_PATH}/movies:/movies #optional
       - ${MEDIA_PATH}/tv_shows:/tv #optional
-#    ports:
-#      - 6767:6767
+    #ports:
+    #   - 6767:6767
     restart: unless-stopped
     networks:
       - netsec_proxy-net
@@ -144,11 +144,11 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-#    ports:
-#      - "2342:2342"
+    # ports:
+    #  - "2342:2342"
     environment:
       PHOTOPRISM_WORKERS: "2"
-#      PHOTOPRISM_TRUSTED_PROXY: ${PHOTOPRISM_TRUSTED_PROXY}
+      # PHOTOPRISM_TRUSTED_PROXY: ${PHOTOPRISM_TRUSTED_PROXY}
       PHOTOPRISM_ADMIN_USER: "${PHOTOPRISM_ADMIN_USER}"                 # admin login username
       PHOTOPRISM_ADMIN_PASSWORD: ${PHOTOPRISM_ADMIN_PASSWORD}          # initial admin password (8-72 characters)
       PHOTOPRISM_AUTH_MODE: "password"               # authentication mode (public, password)
@@ -186,23 +186,23 @@ services:
       PHOTOPRISM_FFMPEG_SIZE: "1920"               # video size limit in pixels (720-7680) (default: 3840)
       PHOTOPRISM_FFMPEG_BITRATE: "32"              # video bitrate limit in Mbit/s (default: 50)
       ## Run/install on first startup (options: update https gpu tensorflow davfs clitools clean):
-#      PHOTOPRISM_INIT: "intel tensorflow"
+      # PHOTOPRISM_INIT: "intel tensorflow"
       ## Run as a non-root user after initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
       PHOTOPRISM_UID: ${PUID}
       PHOTOPRISM_GID: ${PGID} 
-#      PHOTOPRISM_UMASK: 0000
+      # PHOTOPRISM_UMASK: 0000
     ## Start as non-root user before initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
-#    user: "1000:1000"
+    #user: "1000:1000"
     ## Share hardware devices with FFmpeg and TensorFlow (optional):
     devices:
       - "/dev/dri:/dev/dri"                         # Intel QSV
     working_dir: "/photoprism" # do not change or remove
     volumes:
       - "${NEXTCLOUD_DATA_DIRECTORY}/Photos:/photoprism/originals"               # Original media files (DO NOT REMOVE)
-#      - "/mnt/cache:/photoprism/storage/cache"
-#      - "${PHOTOS_DIRECTORY}/pictures:/photoprism/originals/pictures" # *Additional* media folders can be mounted like this
-#      - "${PHOTOS_DIRECTORY}/dcim:/photoprism/originals/dcim" # *Additional* media folders can be mounted like this
-#      - "~/Import:/photoprism/import"                  # *Optional* base folder from which files can be imported to originals
+    #  - "/mnt/cache:/photoprism/storage/cache"
+    #  - "${PHOTOS_DIRECTORY}/pictures:/photoprism/originals/pictures" # *Additional* media folders can be mounted like this
+    #  - "${PHOTOS_DIRECTORY}/dcim:/photoprism/originals/dcim" # *Additional* media folders can be mounted like this
+    #  - "~/Import:/photoprism/import"                  # *Optional* base folder from which files can be imported to originals
       - "${DOCKER_PATH}/media/photoprism:/photoprism/storage"                  # *Writable* storage folder for cache, database, and sidecar files (DO NOT REMOVE)
     networks:
       - netsec_proxy-net
@@ -237,16 +237,16 @@ services:
       - LOG_HTML=false
       - CAPTCHA_SOLVER=none
       - TZ=${TIMEZONE}
-#    ports:
-#      - "8191:8191"
+    #ports:
+    #  - "8191:8191"
     restart: unless-stopped
     networks:
       - netsec_proxy-net
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
-#    ports:
-#      - 13378:80
+    #ports:
+    #  - 13378:80
     volumes:
       - ${MEDIA_PATH}/audiobooks:/audiobooks
       - ${MEDIA_PATH}/podcasts:/podcasts
@@ -267,8 +267,8 @@ services:
     volumes:
       - ${DOCKER_PATH}/media/kavita:/config
       - ${MEDIA_PATH}/ebooks:/data
-#    ports:
-#      - 5000:5000
+    #ports:
+    #  - 5000:5000
     restart: unless-stopped
     networks:
       - netsec_proxy-net
@@ -281,11 +281,50 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${DOCKER_PATH}/media/prowlarr:/config
-#    ports:
-#      - 9696:9696
+    #ports:
+    #  - 9696:9696
     restart: unless-stopped
     networks:
       - netsec_proxy-net
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DOCKER_PATH}/media/lidarr:/config
+      - ${MEDIA_PATH}/music:/music #optional
+      - ${DOWNLOADS_PATH}/torrents:/downloads #optional
+    #ports:
+    #  - 8686:8686
+    restart: unless-stopped
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=${TIMEZONE}
+    #ports:
+    #  - 5055:5055
+    volumes:
+      - ${DOCKER_PATH}/media/jellyseerr:/app/config
+    restart: unless-stopped
+  whisparr:
+    container_name: whisparr
+    image: ghcr.io/hotio/whisparr:latest
+    #ports:
+    #  - "6969:6969"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DOCKER_PATH}/media/whisparr:/config
+      - ${MEDIA_PATH}/whisparr:/data
+  
 networks:
   netsec_proxy-net:
     external: true

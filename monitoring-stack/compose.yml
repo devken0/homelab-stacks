@@ -85,6 +85,14 @@ services:
     networks:
       - netsec_proxy-net
     restart: unless-stopped
+  gotify:
+    image: gotify/server
+    ports:
+      - 8080:80
+    environment:
+      - GOTIFY_DEFAULTUSER_PASS=${GOTIFY_PASS}
+    volumes:
+      - "${DOCKER_PATH}/monitoring/gotify:/app/data"
 networks:
   netsec_proxy-net:
     external: true
