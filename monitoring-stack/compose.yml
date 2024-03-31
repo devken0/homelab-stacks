@@ -1,4 +1,58 @@
 ---
 version: "3.8"
 services:
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+    networks:
+      - npm-net
+    restart: unless-stopped
+  changedetection.io:
+    image: lscr.io/linuxserver/changedetection.io:latest
+    container_name: changedetection
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - BASE_URL= #optional
+      - PLAYWRIGHT_DRIVER_URL= #optional
+    volumes:
+      - changedetection_data:/config
+#    ports:
+#      - 5000:5000
+    networks:
+      - npm-net
+    restart: unless-stopped
+  glances:
+    container_name: glances
+#    ports:
+#      - 61208-61209:61208-61209
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - GLANCES_OPT=-w
+    restart: always
+    pid: host
+    image: nicolargo/glances
+    networks: 
+      - npm-net
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+#    ports:
+#      - 9999:8080
+    networks:
+      - npm-net
+    restart: unless-stopped
 volumes:
+  changedetection_data:
+
+networks:
+  npm-net:
+    external: true

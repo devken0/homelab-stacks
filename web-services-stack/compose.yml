@@ -1,0 +1,38 @@
+---
+version: "3.8"
+services:
+  linkding:
+    container_name: linkding
+    image: sissbruecker/linkding:latest
+#    ports:
+#      - 9090:9090  
+    environment:
+      LD_SUPERUSER_NAME: $LD_SUPERUSER_NAME
+      LD_SUPERUSER_PASSWORD: $LD_SUPERUSER_PASSWORD
+      LD_DISABLE_URL_VALIDATION: True
+    volumes:
+      - "linkding_data:/etc/linkding/data"
+    networks:
+      - npm-net
+    restart: unless-stopped
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - heimdall_data:/config
+#    ports:
+#      - 8080:80
+#      - 8443:443
+    networks:
+      - npm-net
+    restart: unless-stopped
+volumes:
+  linkding_data:
+  heimdall_data:
+networks:
+  npm-net:
+    external: true

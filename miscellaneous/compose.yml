@@ -1,0 +1,23 @@
+---
+version: "3.8"
+services:
+  remmina:
+    image: lscr.io/linuxserver/remmina:latest
+    container_name: remmina
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - remmina_data:/config
+#    ports:
+#      - 3000:3000
+#      - 3001:3001
+    networks:
+      - npm-net
+    restart: unless-stopped
+volumes:
+  remmina_data:
+networks:
+  npm-net:
+    external: true
