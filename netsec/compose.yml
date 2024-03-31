@@ -6,8 +6,8 @@ services:
     image: vaultwarden/server
     restart: always
     volumes:
-      - ${DOCKER_PATH}/netsec/vaultwarden/data:/data
-      - ${DOCKER_PATH}/netsec/vaultwarden/ssl:/ssl
+      - ./vaultwarden/data:/data
+      - ./vaultwarden/ssl:/ssl
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 8089:8089
@@ -46,8 +46,8 @@ services:
     environment:
       DISABLE_IPV6: "true"
     volumes:
-      - ${DOCKER_PATH}/netsec/nginxproxymanager/data:/data
-      - ${DOCKER_PATH/netsec/nginxproxymanager/letsencrypt:/etc/letsencrypt
+      - ./nginxproxymanager/data:/data
+      - ./nginxproxymanager/letsencrypt:/etc/letsencrypt
     networks:
       - proxy-net
   ddns-updater:
@@ -57,7 +57,7 @@ services:
     ports:
       - 8000:8000/tcp
     volumes:
-      - ${DOCKER_PATH}/netsec/ddns-updater:/updater/data
+      - ./ddns-updater:/updater/data
     environment:
     #  - CONFIG=
       - PERIOD=5m

@@ -7,7 +7,7 @@ services:
     #ports:
     #  - 5005:80
     volumes:
-      - ${DOCKER_PATH}/web-services/wbo:/opt/app/server-data" 
+      - ./wbo:/opt/app/server-data" 
     restart: unless-stopped
     networks:
       - netsec_proxy-net
@@ -22,7 +22,7 @@ services:
 #      - 4001:4001
     command: -db /data/store.db
     volumes:
-      - ${DOCKER_PATH}/web-services/picoshare:/data
+      - ./picoshare:/data
     networks:
       - netsec_proxy-net
     restart: unless-stopped
@@ -36,7 +36,7 @@ services:
       LD_SUPERUSER_PASSWORD: $LD_SUPERUSER_PASSWORD
       LD_DISABLE_URL_VALIDATION: True
     volumes:
-      - "${DOCKER_PATH}/web-services/linkding:/etc/linkding/data"
+      - "./linkding:/etc/linkding/data"
     networks:
       - netsec_proxy-net
     restart: unless-stopped
@@ -48,7 +48,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/web-services/heimdall:/config
+      - ./heimdall:/config
 #    ports:
 #      - 8080:80
 #      - 8443:443

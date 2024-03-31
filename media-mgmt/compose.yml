@@ -14,7 +14,7 @@ services:
       ND_SESSIONTIMEOUT: 24h
       ND_BASEURL: "${NAVIDROME_BASEURL}"
     volumes:
-      - "${DOCKER_PATH}/media/navidrome:/data"
+      - "./navidrome:/data"
       - "${MEDIA_PATH}/music:/music:ro"
     networks:
       - netsec_proxy-net
@@ -26,7 +26,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - "${DOCKER_PATH}/media/sonarr:/config"
+      - "./sonarr:/config"
       - "${MEDIA_PATH}/tv_shows:/tv" #optional
       - "${DOWNLOADS_PATH}/torrents:/downloads" #optional
     ports:
@@ -53,7 +53,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/media/radarr:/config
+      - ./radarr:/config
       - ${MEDIA_PATH}/movies:/movies #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
 #    ports:
@@ -69,7 +69,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/media/readarr:/config
+      - ./readarr:/config
       - ${MEDIA_PATH}/ebooks:/books #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
 #    ports:
@@ -86,7 +86,7 @@ services:
       - TZ=${TIMEZONE}
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - ${DOCKER_PATH}/media/deluge:/config
+      - ./deluge:/config
       - ${DOWNLOADS_PATH}/torrents:/downloads
     #ports:
     #  - 8112:8112
@@ -105,9 +105,9 @@ services:
       - TZ=${TIMEZONE}
       - JELLYFIN_PublishedServerUrl=${JELLYFIN_URL} #optional
     volumes:
-      - ${DOCKER_PATH}/media/jellyfin:/config
-      - ${MEDIA_PATH}/tv_shows:/data/tvshows
-      - ${MEDIA_PATH}/movies:/data/movies
+      - ./jellyfin:/config
+      - ${MEDIA_PATH}/tv_shows:/data/tvshows:ro
+      - ${MEDIA_PATH}/movies:/data/movies:ro
     devices:
       - /dev/dri:/dev/dri
     ports:
@@ -126,7 +126,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/media/bazaarr:/config
+      - ./bazaarr:/config
       - ${MEDIA_PATH}/movies:/movies #optional
       - ${MEDIA_PATH}/tv_shows:/tv #optional
     #ports:
@@ -203,7 +203,7 @@ services:
     #  - "${PHOTOS_DIRECTORY}/pictures:/photoprism/originals/pictures" # *Additional* media folders can be mounted like this
     #  - "${PHOTOS_DIRECTORY}/dcim:/photoprism/originals/dcim" # *Additional* media folders can be mounted like this
     #  - "~/Import:/photoprism/import"                  # *Optional* base folder from which files can be imported to originals
-      - "${DOCKER_PATH}/media/photoprism:/photoprism/storage"                  # *Writable* storage folder for cache, database, and sidecar files (DO NOT REMOVE)
+      - "./photoprism:/photoprism/storage"                  # *Writable* storage folder for cache, database, and sidecar files (DO NOT REMOVE)
     networks:
       - netsec_proxy-net
   photoprism-mariadb:
@@ -218,7 +218,7 @@ services:
       - apparmor:unconfined
     command: --innodb-buffer-pool-size=512M --transaction-isolation=READ-COMMITTED --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --max-connections=512 --innodb-rollback-on-timeout=OFF --innodb-lock-wait-timeout=120
     volumes:
-      - "${DOCKER_PATH}/media/photoprism/db:/var/lib/mysql" # DO NOT REMOVE
+      - "./photoprism/db:/var/lib/mysql" # DO NOT REMOVE
     environment:
       MARIADB_AUTO_UPGRADE: "1"
       MARIADB_INITDB_SKIP_TZINFO: "1"
@@ -250,8 +250,8 @@ services:
     volumes:
       - ${MEDIA_PATH}/audiobooks:/audiobooks
       - ${MEDIA_PATH}/podcasts:/podcasts
-      - ${DOCKER_PATH}/media/audiobookshelf/config:/config
-      - ${DOCKER_PATH}/media/audiobookshelf/metadata:/metadata
+      - ./audiobookshelf/config:/config
+      - ./audiobookshelf/metadata:/metadata
     environment:
       - TZ=${TIMEZONE}
     networks:
@@ -265,7 +265,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/media/kavita:/config
+      - ./kavita:/config
       - ${MEDIA_PATH}/ebooks:/data
     #ports:
     #  - 5000:5000
@@ -280,7 +280,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/media/prowlarr:/config
+      - ./prowlarr:/config
     #ports:
     #  - 9696:9696
     restart: unless-stopped
@@ -294,7 +294,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/media/lidarr:/config
+      - ./lidarr:/config
       - ${MEDIA_PATH}/music:/music #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     #ports:
@@ -309,7 +309,7 @@ services:
     #ports:
     #  - 5055:5055
     volumes:
-      - ${DOCKER_PATH}/media/jellyseerr:/app/config
+      - ./jellyseerr:/app/config
     restart: unless-stopped
   whisparr:
     container_name: whisparr
@@ -322,9 +322,8 @@ services:
       - UMASK=002
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/media/whisparr:/config
+      - ./whisparr:/config
       - ${MEDIA_PATH}/whisparr:/data
-  
 networks:
   netsec_proxy-net:
     external: true

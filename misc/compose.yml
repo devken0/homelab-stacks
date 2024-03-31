@@ -9,7 +9,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - ${DOCKER_PATH}/misc/remmina:/config
+      - ./remmina:/config
 #    ports:
 #      - 3000:3000
 #      - 3001:3001
@@ -28,7 +28,7 @@ services:
       - SUBFOLDER=/ #optional
       - TITLE=Webtop #optional
     volumes:
-      - ${DOCKER_PATH}/misc/webtop:/config
+      - ./webtop:/config
     #  - /var/run/docker.sock:/var/run/docker.sock #optional
     #ports:
     #  - 3000:3000
