@@ -1,40 +1,6 @@
 ---
 version: "3.8"
 services:
-  vaultwarden:
-    container_name: vaultwarden
-    image: vaultwarden/server
-    restart: always
-    volumes:
-      - ./vaultwarden/data:/data
-      - ./vaultwarden/ssl:/ssl
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - 8089:8089
-      - 3012:3012
-    user: ${PUID}:${PGID}
-    environment:
-      - LOG_FILE=/data/vaultwarden.log
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-      #- SIGNUPS_ALLOWED=true
-      - SIGNUPS_ALLOWED=false
-      - INVITATIONS_ALLOWED=true
-      - LOG_LEVEL=warn
-      - EXTENDED_LOGGING=true
-      - DOMAIN=${VAULTWARDEN_DOMAIN}
-      - ROCKET_PORT=8089
-      - WEBSOCKET_ENABLED=true
-      - ADMIN_TOKEN=${VAULTWARDEN_TOKEN}
-      - SMTP_HOST=${GM_SERVER}
-      - SMTP_FROM=${GM_USER}
-      - SMTP_PORT=${GM_PORT}
-      - SMTP_SSL=true
-      - SMTP_USERNAME=${GM_USER}
-      - SMTP_PASSWORD=${GM_PSW}
-    networks:
-      - proxy-net
   nginxproxymanager:
     image: jc21/nginx-proxy-manager:latest
     restart: always
@@ -50,35 +16,6 @@ services:
       - ./nginxproxymanager/letsencrypt:/etc/letsencrypt
     networks:
       - proxy-net
-  ddns-updater:
-    image: qmcgaw/ddns-updater
-    container_name: ddns-updater
-    network_mode: bridge
-    ports:
-      - 8000:8000/tcp
-    volumes:
-      - ./ddns-updater:/updater/data
-    environment:
-    #  - CONFIG=
-      - PERIOD=5m
-      - UPDATE_COOLDOWN_PERIOD=5m
-      - PUBLICIP_FETCHERS=all
-      - PUBLICIP_HTTP_PROVIDERS=all
-      - PUBLICIPV4_HTTP_PROVIDERS=all
-      - PUBLICIPV6_HTTP_PROVIDERS=all
-      - PUBLICIP_DNS_PROVIDERS=all
-      - PUBLICIP_DNS_TIMEOUT=3s
-      - HTTP_TIMEOUT=10s
-      - LISTENING_ADDRESS=:8000
-      - ROOT_URL=/
-    #  - BACKUP_PERIOD=24h # 0 to disable
-    #   - BACKUP_DIRECTORY=/updater/data
-      - LOG_LEVEL=info
-      - LOG_CALLER=hidden
-    #  - SHOUTRRR_ADDRESSES=
-      - PUID=${PUID}
-      - PGID=${PGID}
-    restart: always
 networks:
   proxy-net:
     driver: bridge
