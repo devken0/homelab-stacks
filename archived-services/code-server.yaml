@@ -15,14 +15,12 @@ services:
 #      - PROXY_DOMAIN=code-server.my.domain #optional
 #      - DEFAULT_WORKSPACE=/config/workspace #optional
     volumes:
-      - code-server_data:/config
+      - ${DOCKER_PATH}/dev/codeserver:/config
 #    ports:
 #      - 8443:8443
     networks:
-      - npm-net
+      - netsec_proxy-net
     restart: unless-stopped
-volumes:
-  code-server_data:
 networks: 
-  npm-net:
+  netsec_proxy-net:
     external: true

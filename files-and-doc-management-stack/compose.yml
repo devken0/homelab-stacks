@@ -1,4 +1,23 @@
----
-version: "3.8"
 services:
-volumes:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: ${HOSTNAME} #optional
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${DOCKER_PATH}/files-docs/syncthing:/config
+      - ${SYNCTHING_DATA}:/data
+    ports:
+      #- 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
+    networks:
+      - netsec_proxy-net
+networks:
+  netsec_proxy-net:
+    external: true

@@ -9,15 +9,13 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - remmina_data:/config
+      - ${DOCKER_PATH}/misc/remmina:/config
 #    ports:
 #      - 3000:3000
 #      - 3001:3001
     networks:
-      - npm-net
+      - netsec_proxy-net
     restart: unless-stopped
-volumes:
-  remmina_data:
 networks:
-  npm-net:
+  netsec_proxy-net:
     external: true

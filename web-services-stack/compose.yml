@@ -1,6 +1,29 @@
 ---
 version: "3.8"
 services:
+  wbo:
+    image: lovasoa/wbo
+    container_name: wbo
+    #ports:
+    #  - 5005:80
+    volumes:
+      - ${DOCKER_PATH}/wbo:/opt/app/server-data" 
+    restart: unless-stopped
+  picoshare:
+    image: mtlynch/picoshare
+    container_name: picoshare
+    environment:
+      - PORT=4001
+      - PS_SHARED_SECRET=${PICOSHARE_PASSWORD} # Change to any password
+      - PS_BEHIND_PROXY=true
+#    ports:
+#      - 4001:4001
+    command: -db /data/store.db
+    volumes:
+      - ${DOCKER_PATH}/web-services/picoshare:/data
+    networks:
+      - netsec_proxy-net
+    restart: unless-stopped
   linkding:
     container_name: linkding
     image: sissbruecker/linkding:latest
@@ -11,9 +34,9 @@ services:
       LD_SUPERUSER_PASSWORD: $LD_SUPERUSER_PASSWORD
       LD_DISABLE_URL_VALIDATION: True
     volumes:
-      - "linkding_data:/etc/linkding/data"
+      - "${DOCKER_PATH}/web-services/linkding:/etc/linkding/data"
     networks:
-      - npm-net
+      - netsec_proxy-net
     restart: unless-stopped
   heimdall:
     image: lscr.io/linuxserver/heimdall:latest
@@ -23,16 +46,13 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
     volumes:
-      - heimdall_data:/config
+      - ${DOCKER_PATH}/web-services/heimdall:/config
 #    ports:
 #      - 8080:80
 #      - 8443:443
     networks:
-      - npm-net
+      - netsec_proxy-net
     restart: unless-stopped
-volumes:
-  linkding_data:
-  heimdall_data:
 networks:
-  npm-net:
+  netsec_proxy-net:
     external: true

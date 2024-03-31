@@ -1,7 +1,39 @@
 ---
 version: "3.8"
 services:
-  npm:
+  vaultwarden:
+    container_name: vaultwarden
+    image: vaultwarden/server
+    restart: always
+    volumes:
+      - ${DOCKER_PATH}/netsec/vaultwarden/data:/data
+      - ${DOCKER_PATH}/netsec/vaultwarden/ssl:/ssl
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 8089:8089
+      - 3012:3012
+    user: ${PUID}:${PGID}
+    environment:
+      - LOG_FILE=/data/vaultwarden.log
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      #- SIGNUPS_ALLOWED=true
+      - SIGNUPS_ALLOWED=false
+      - INVITATIONS_ALLOWED=true
+      - LOG_LEVEL=warn
+      - EXTENDED_LOGGING=true
+      - DOMAIN=${VAULTWARDEN_DOMAIN}
+      - ROCKET_PORT=8089
+      - WEBSOCKET_ENABLED=true
+      - ADMIN_TOKEN=${VAULTWARDEN_TOKEN}
+      - SMTP_HOST=${GM_SERVER}
+      - SMTP_FROM=${GM_USER}
+      - SMTP_PORT=${GM_PORT}
+      - SMTP_SSL=true
+      - SMTP_USERNAME=${GM_USER}
+      - SMTP_PASSWORD=${GM_PSW}
+  nginxproxymanager:
     image: jc21/nginx-proxy-manager:latest
     restart: always
     container_name: npm
@@ -12,10 +44,10 @@ services:
     environment:
       DISABLE_IPV6: "true"
     volumes:
-      - nginxproxymanager_data:/data
-      - nginxproxymanager_letsencrypt:/etc/letsencrypt
+      - ${DOCKER_PATH}/netsec/nginxproxymanager/data:/data
+      - ${DOCKER_PATH/netsec/nginxproxymanager/letsencrypt:/etc/letsencrypt
     networks:
-      - npm-net
+      - proxy-net
   ddns-updater:
     image: qmcgaw/ddns-updater
     container_name: ddns-updater
@@ -23,7 +55,7 @@ services:
     ports:
       - 8000:8000/tcp
     volumes:
-      - ddns-updater_data:/updater/data
+      - ${DOCKER_PATH}/netsec/ddns-updater:/updater/data
     environment:
     #  - CONFIG=
       - PERIOD=5m
@@ -45,10 +77,6 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     restart: always
-volumes:
-  nginxproxymanager_data:
-  nginxproxymanager_letsencrypt:
-  ddns-updater_data:
 networks:
-  npm-net:
+  proxy-net:
     driver: bridge

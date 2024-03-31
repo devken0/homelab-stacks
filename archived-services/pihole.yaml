@@ -18,17 +18,14 @@ services:
       DNSMASQ_USER: root
     # Volumes store your data between container upgrades
     volumes:
-      - 'pihole_data:/etc/pihole'
-      - 'pihole_dnsmasq_data:/etc/dnsmasq.d'
+      - '${DOCKER_PATH}/netsec/pihole/config:/etc/pihole'
+      - '${DOCKER_PATH}/netsec/pihole/dnsmasq.d:/etc/dnsmasq.d'
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
 #    cap_add:
 #      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
     networks:
-      - npm-net
+      - netsec_proxy-net
     restart: always
-volumes:
-  pihole_data:
-  pihole_dnsmasq_data:
 networks:
-  npm-net:
+  netsec_proxy-net:
     external: true

@@ -1,16 +1,51 @@
 ---
 version: "3.8"
 services:
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  autoheal:
+    container_name: autoheal
+    restart: always
     environment:
-      - WATCHTOWER_CLEANUP=true
-    networks:
-      - npm-net
-    restart: unless-stopped
+      - AUTOHEAL_CONTAINER_LABEL=all
+      - TZ=${TIMEZONE}
+      - WATCHTOWER_WARN_ON_HEAD_FAILURE=never
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    image: willfarrell/autoheal
+  pialert:
+    container_name: pialert
+    hostname: pialert.tecken
+    #privileged: true
+    image: "jokobsk/pi.alert:latest"
+    network_mode: "host"
+    #ports:
+    #  - "20211:20211/tcp"
+    volumes:
+      - ${DOCKER_PATH}/monitoring/pialert/data:/home/pi/pialert/config
+      - ${DOCKER_PATH}/monitoring/pialert/db:/home/pi/pialert/db
+    #  - local/path/logs:/home/pi/pialert/front/log
+    environment:
+      - TZ=${TIMEZONE}
+    #  - PORT=20211
+    restart: always
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    environment:
+      TZ: ${TIMEZONE}
+      WATCHTOWER_REMOVE_VOLUMES: "true"
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_INCLUDE_STOPPED: "true"
+      WATCHTOWER_POLL_INTERVAL: ${WATCHTOWER_INTERVAL}
+      WATCHTOWER_TIMEOUT: 15
+      WATCHTOWER_NOTIFICATIONS_LEVEL: info
+      WATCHTOWER_HTTP_API_METRICS: "true"
+      WATCHTOWER_HTTP_API_TOKEN: ${WATCHTOWER_API_TOKEN}
+      WATCHTOWER_NOTIFICATIONS: shoutrrr
+      # Using Pushbullet, telegram and pushover as examples, but just pick one
+      # WATCHTOWER_NOTIFICATION_URL: "pushover://shoutrrr:$PUSHOVER_APP_API__SECRET@$PUSHOVER_USER_API__SECRET/?devices=$PUSHOVER_DEVICE telegram://$TELEGRAM_BOT_TOKEN__SECRET@telegram?channels=$TELEGRAM_CHAT_ID__SECRET pushbullet://$PUSHBULLET_API__SECRET"
+    restart: always
   changedetection.io:
     image: lscr.io/linuxserver/changedetection.io:latest
     container_name: changedetection
@@ -21,11 +56,11 @@ services:
       - BASE_URL= #optional
       - PLAYWRIGHT_DRIVER_URL= #optional
     volumes:
-      - changedetection_data:/config
+      - ${DOCKER_PATH}/monitoring/changedetectionio:/config
 #    ports:
 #      - 5000:5000
     networks:
-      - npm-net
+      - netsec_proxy-net
     restart: unless-stopped
   glances:
     container_name: glances
@@ -39,7 +74,7 @@ services:
     pid: host
     image: nicolargo/glances
     networks: 
-      - npm-net
+      - netsec_proxy-net
   dozzle:
     container_name: dozzle
     image: amir20/dozzle
@@ -48,11 +83,8 @@ services:
 #    ports:
 #      - 9999:8080
     networks:
-      - npm-net
+      - netsec_proxy-net
     restart: unless-stopped
-volumes:
-  changedetection_data:
-
 networks:
-  npm-net:
+  netsec_proxy-net:
     external: true
