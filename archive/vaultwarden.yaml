@@ -1,0 +1,48 @@
+services:
+  #vaultwarden:
+  #  container_name: vaultwarden
+  #  image: vaultwarden/server
+  #  restart: always
+  #  volumes:
+  #    - ./vaultwarden/data:/data
+  #    - /etc/localtime:/etc/localtime:ro
+  #  #ports:
+  #  #  - 80:80
+  #  user: ${PUID}:${PGID}
+  #  environment:
+  #    #- LOG_FILE=/data/vaultwarden.log
+  #    - PUID=${PUID}
+  #    - PGID=${PGID}
+  #    - TZ=${TIMEZONE}
+  #    #- INVITATIONS_ALLOWED=true
+  #    - LOG_LEVEL=warn
+  #    - EXTENDED_LOGGING=true
+  #    - DOMAIN=${VAULTWARDEN_URL}
+  #    #- ROCKET_PORT=8089
+  #    - WEBSOCKET_ENABLED=true
+  #    - ADMIN_TOKEN=${VAULTWARDEN_TOKEN}
+  #    - LOGIN_RATELIMIT_MAX_BURST=10
+  #    - LOGIN_RATELIMIT_SECONDS=60
+  #    - ADMIN_RATELIMIT_MAX_BURST=10
+  #    - ADMIN_RATELIMIT_SECONDS=60
+  #    - SENDS_ALLOWED=true
+  #    - EMERGENCY_ACCESS_ALLOWED=true
+  #    - WEB_VAULT_ENABLED=true
+  #    - SIGNUPS_ALLOWED=false
+  #    - SIGNUPS_VERIFY=true
+  #    - SIGNUPS_VERIFY_RESEND_TIME=3600
+  #    - SIGNUPS_VERIFY_RESEND_LIMIT=5
+  #    #- SIGNUPS_DOMAINS_WHITELIST=yourdomainhere.com,anotherdomain.com
+  #    - SMTP_HOST=smtp.youremaildomain.com
+  #    - SMTP_FROM=vaultwarden@youremaildomain.com
+  #    - SMTP_FROM_NAME=Vaultwarden
+  #    - SMTP_SECURITY=starttls
+  #    - SMTP_PORT=XXXX # 587/465
+  #    - SMTP_USERNAME=vaultwarden@youremaildomain.com
+  #    - SMTP_PASSWORD=YourReallyStrongPasswordHere
+  #    - SMTP_AUTH_MECHANISM="Mechanism"
+  #  networks:
+  #    - proxy-net
+networks:
+  netsec_proxy-net:
+    external: true

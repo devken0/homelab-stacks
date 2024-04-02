@@ -1,0 +1,33 @@
+services:
+  ddns-updater:
+    image: qmcgaw/ddns-updater
+    container_name: ddns-updater
+    network_mode: bridge
+    ports:
+      - 8000:8000/tcp
+    volumes:
+      - ./ddns-updater:/updater/data
+    environment:
+    #  - CONFIG=
+      - PERIOD=5m
+      - UPDATE_COOLDOWN_PERIOD=5m
+      - PUBLICIP_FETCHERS=all
+      - PUBLICIP_HTTP_PROVIDERS=all
+      - PUBLICIPV4_HTTP_PROVIDERS=all
+      - PUBLICIPV6_HTTP_PROVIDERS=all
+      - PUBLICIP_DNS_PROVIDERS=all
+      - PUBLICIP_DNS_TIMEOUT=3s
+      - HTTP_TIMEOUT=10s
+      - LISTENING_ADDRESS=:8000
+      - ROOT_URL=/
+    #  - BACKUP_PERIOD=24h # 0 to disable
+    #   - BACKUP_DIRECTORY=/updater/data
+      - LOG_LEVEL=info
+      - LOG_CALLER=hidden
+    #  - SHOUTRRR_ADDRESSES=
+      - PUID=${PUID}
+      - PGID=${PGID}
+    restart: always
+networks:
+  netsec_proxy-net:
+    external: true

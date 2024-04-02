@@ -1,0 +1,17 @@
+services:
+  pialert:
+    container_name: pialert
+    hostname: pialert.tecken
+    #privileged: true
+    image: "jokobsk/pi.alert:latest"
+    network_mode: "host"
+    #ports:
+    #  - "20211:20211/tcp"
+    volumes:
+      - ./pialert/data:/home/pi/pialert/config
+      - ./pialert/db:/home/pi/pialert/db
+    #  - local/path/logs:/home/pi/pialert/front/log
+    environment:
+      - TZ=${TIMEZONE}
+      - PORT=20211
+    restart: always
