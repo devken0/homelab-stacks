@@ -4,11 +4,11 @@ services:
   nginxproxymanager:
     image: jc21/nginx-proxy-manager:latest
     restart: always
-    container_name: npm
+    container_name: nginxproxymanager
     ports:
       - 80:80 # Public HTTP Port
       - 443:443 # Public HTTPS Port
-      - 81:81 # Comment out after creating a proxy host for the service
+    #  - 81:81 # Comment out after creating a proxy host for the service
     environment:
       DISABLE_IPV6: "true"
     volumes:

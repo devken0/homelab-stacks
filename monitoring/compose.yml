@@ -14,6 +14,8 @@ services:
       - ./portainer:/data
     environment:
       - TZ=${TIMEZONE}
+    networks:
+      - netsec_proxy-net
   autoheal:
     container_name: autoheal
     restart: always
@@ -24,22 +26,6 @@ services:
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
     image: willfarrell/autoheal
-  pialert:
-    container_name: pialert
-    hostname: pialert.tecken
-    #privileged: true
-    image: "jokobsk/pi.alert:latest"
-    network_mode: "host"
-    #ports:
-    #  - "20211:20211/tcp"
-    volumes:
-      - ./pialert/data:/home/pi/pialert/config
-      - ./pialert/db:/home/pi/pialert/db
-    #  - local/path/logs:/home/pi/pialert/front/log
-    environment:
-      - TZ=${TIMEZONE}
-    #  - PORT=20211
-    restart: always
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower
@@ -93,19 +79,23 @@ services:
     image: amir20/dozzle
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#    ports:
-#      - 9999:8080
+    #ports:
+    #   - 9999:8080
     networks:
       - netsec_proxy-net
     restart: unless-stopped
   gotify:
     image: gotify/server
-    ports:
-      - 8080:80
+    container_name: gotify
+    #ports:
+    #  - 8080:80
     environment:
       - GOTIFY_DEFAULTUSER_PASS=${GOTIFY_PASS}
     volumes:
       - "./gotify:/app/data"
+    restart: unless-stopped
+    networks:
+      - netsec_proxy-net
 networks:
   netsec_proxy-net:
     external: true

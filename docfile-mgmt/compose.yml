@@ -4,12 +4,18 @@ services:
     container_name: syncthing
     hostname: ${HOSTNAME} #optional
     environment:
-      - PUID=${SYNCTHING_PUID}
-      - PGID=${SYNCTHING_PGID}
+      - PUID=${NEXTCLOUD_DATA_UID}
+      - PGID=${NEXTCLOUD_DATA_GID}
       - TZ=${TIMEZONE}
     volumes:
       - ./syncthing:/config
-      - ${NEXTCLOUD_DATA}/sync:/data
+      - ${NEXTCLOUD_DATA}/Sync/App_Backups:/data/App_Backups
+      - ${NEXTCLOUD_DATA}/Sync/App_Exports:/data/App_Exports
+      - ${NEXTCLOUD_DATA}/Sync/DCIM:/data/DCIM
+      - ${NEXTCLOUD_DATA}/Sync/Dropbox:/data/Dropbox
+      - ${NEXTCLOUD_DATA}/Sync/Music:/data/Music
+      - ${NEXTCLOUD_DATA}/Sync/Pictures:/data/Pictures
+      - ${NEXTCLOUD_DATA}/Sync/Sounds:/data/Sounds
     ports:
       #- 8384:8384
       - 22000:22000/tcp
@@ -20,6 +26,7 @@ services:
       - netsec_proxy-net
   stirling-pdf:
     image: frooodle/s-pdf:latest
+    container_name: stirling-pdf
     #ports:
     #  - '8080:8080'
     volumes:
@@ -30,6 +37,7 @@ services:
       - DOCKER_ENABLE_SECURITY=false
     networks:
       - netsec_proxy-net
+    restart: unless-stopped
   duplicati:
     image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
