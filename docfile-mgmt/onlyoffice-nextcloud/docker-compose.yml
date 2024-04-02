@@ -1,0 +1,44 @@
+version: '3'
+services:
+  app:
+    image: nextcloud:fpm
+    container_name: nextcloud 
+    restart: always
+    expose:
+      - '80'
+      - '9000'
+    volumes:
+      - app_data:/var/www/html
+      - /mnt/nextcloud:/var/www/data
+  onlyoffice-document-server:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice-docs 
+    restart: always
+    environment:
+      - JWT_SECRET=elaborate-catwalk-onlyoffice-secret
+    expose:
+      - '80'
+      - '443'
+    volumes:
+      - document_data:/var/www/onlyoffice/Data
+      - document_log:/var/log/onlyoffice
+  nginx:
+    image: nginx
+    container_name: nextcloud-proxy
+    restart: always
+    ports:
+      - 82:80
+      - 444:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - app_data:/var/www/html
+    networks:
+      - netsec_proxy-net
+      - default
+volumes:
+  document_data:
+  document_log:
+  app_data:
+networks:
+  netsec_proxy-net:
+    external: true
