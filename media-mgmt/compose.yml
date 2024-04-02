@@ -5,8 +5,8 @@ services:
     image: deluan/navidrome:latest
     container_name: navidrome
     user: ${PUID}:${PGID} # should be owner of volumes
-    #ports:
-    #  - "4533:4533"
+    ports:
+      - "4533:4533"
     restart: unless-stopped
     environment:
       ND_SCANSCHEDULE: 1h
@@ -16,8 +16,6 @@ services:
     volumes:
       - "./navidrome:/data"
       - "${MEDIA_PATH}/music:/music:ro"
-    networks:
-      - netsec_proxy-net
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -32,19 +30,15 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   openbooks:
     image: evanbuss/openbooks
     container_name: openbooks
-#    ports:
-#      - "8080:80"
+    ports:
+      - "8081:80"
     volumes:
       - "${DOWNLOADS_PATH}/openbooks:/books"
     command: "--persist --name ${OPENBOOKS_USERNAME}"
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -56,11 +50,9 @@ services:
       - ./radarr:/config
       - ${MEDIA_PATH}/movies:/movies #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
-#    ports:
-#      - 7878:7878
+    ports:
+      - 7878:7878
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   readarr:
     image: lscr.io/linuxserver/readarr:develop
     container_name: readarr
@@ -72,11 +64,9 @@ services:
       - ./readarr:/config
       - ${MEDIA_PATH}/ebooks:/books #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
-#    ports:
-#      - 8787:8787
+    ports:
+      - 8787:8787
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
@@ -89,13 +79,11 @@ services:
       - ./deluge:/config
       - ${DOWNLOADS_PATH}/torrents:/downloads
     ports:
-    #  - 8112:8112
+      - 8112:8112
       - 6881:6881
       - 6881:6881/udp
       - 58846:58846 #optional
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
@@ -111,13 +99,11 @@ services:
     devices:
       - /dev/dri:/dev/dri
     ports:
-#      - 8096:8096
+      - 8096:8096
       - 8920:8920 #optional
       - 7359:7359/udp #optional
       - 1900:1900/udp #optional
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
@@ -129,11 +115,9 @@ services:
       - ./bazaarr:/config
       - ${MEDIA_PATH}/movies:/movies #optional
       - ${MEDIA_PATH}/tv_shows:/tv #optional
-    #ports:
-    #   - 6767:6767
+    ports:
+      - 6767:6767
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   photoprism:
     image: photoprism/photoprism:latest
     container_name: photoprism
@@ -144,8 +128,8 @@ services:
     security_opt:
       - seccomp:unconfined
       - apparmor:unconfined
-    # ports:
-    #  - "2342:2342"
+    ports:
+      - "2342:2342"
     environment:
       PHOTOPRISM_WORKERS: "2"
       # PHOTOPRISM_TRUSTED_PROXY: ${PHOTOPRISM_TRUSTED_PROXY}
@@ -186,13 +170,13 @@ services:
       PHOTOPRISM_FFMPEG_SIZE: "1920"               # video size limit in pixels (720-7680) (default: 3840)
       PHOTOPRISM_FFMPEG_BITRATE: "32"              # video bitrate limit in Mbit/s (default: 50)
       ## Run/install on first startup (options: update https gpu tensorflow davfs clitools clean):
-      # PHOTOPRISM_INIT: "intel tensorflow"
+      PHOTOPRISM_INIT: "intel tensorflow"
       ## Run as a non-root user after initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
       PHOTOPRISM_UID: ${NEXTCLOUD_DATA_UID}
       PHOTOPRISM_GID: ${NEXTCLOUD_DATA_GID}
       # PHOTOPRISM_UMASK: 0000
     ## Start as non-root user before initialization (supported: 0, 33, 50-99, 500-600, and 900-1200):
-    user: "${PUID}:${PGID}"
+    #user: "${PUID}:${PGID}"
     ## Share hardware devices with FFmpeg and TensorFlow (optional):
     devices:
       - "/dev/dri:/dev/dri"                         # Intel QSV
@@ -204,15 +188,13 @@ services:
     #  - "${PHOTOS_DIRECTORY}/dcim:/photoprism/originals/dcim" # *Additional* media folders can be mounted like this
     #  - "~/Import:/photoprism/import"                  # *Optional* base folder from which files can be imported to originals
       - "./photoprism:/photoprism/storage"                  # *Writable* storage folder for cache, database, and sidecar files (DO NOT REMOVE)
-    networks:
-      - netsec_proxy-net
   photoprism-mariadb:
     image: mariadb:11
     container_name: photoprism-mariadb
     ## If MariaDB gets stuck in a restart loop, this points to a memory or filesystem issue:
     ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
     restart: unless-stopped
-    user: ${PUID}:${PGID}
+    #user: ${PUID}:${PGID}
     stop_grace_period: 5s
     security_opt: # see https://github.com/MariaDB/mariadb-docker/issues/434#issuecomment-1136151239
       - seccomp:unconfined
@@ -227,8 +209,6 @@ services:
       MARIADB_USER: "photoprism"
       MARIADB_PASSWORD: ${PHOTOPRISM_DATABASE_PASSWORD} 
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-    networks:
-      - netsec_proxy-net
   flaresolverr:
     # DockerHub mirror flaresolverr/flaresolverr:latest
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -238,16 +218,14 @@ services:
       - LOG_HTML=false
       - CAPTCHA_SOLVER=none
       - TZ=${TIMEZONE}
-    #ports:
-    #  - "8191:8191"
+    ports:
+      - "8191:8191"
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   audiobookshelf:
     image: ghcr.io/advplyr/audiobookshelf:latest
     container_name: audiobookshelf
-    #ports:
-    #  - 13378:80
+    ports:
+      - 13378:80
     volumes:
       - ${MEDIA_PATH}/audiobooks:/audiobooks
       - ${MEDIA_PATH}/podcasts:/podcasts
@@ -255,8 +233,6 @@ services:
       - ./audiobookshelf/metadata:/metadata
     environment:
       - TZ=${TIMEZONE}
-    networks:
-      - netsec_proxy-net
     restart: unless-stopped
   kavita:
     image: lscr.io/linuxserver/kavita:latest
@@ -268,11 +244,9 @@ services:
     volumes:
       - ./kavita:/config
       - ${MEDIA_PATH}/ebooks:/data
-    #ports:
-    #  - 5000:5000
+    ports:
+      - 5000:5000
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -282,11 +256,9 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./prowlarr:/config
-    #ports:
-    #  - 9696:9696
+    ports:
+      - 9696:9696
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
@@ -298,29 +270,25 @@ services:
       - ./lidarr:/config
       - ${MEDIA_PATH}/music:/music #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
-    #ports:
-    #  - 8686:8686
+    ports:
+      - 8686:8686
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
     environment:
       - LOG_LEVEL=debug
       - TZ=${TIMEZONE}
-    #ports:
-    #  - 5055:5055
+    ports:
+      - 5055:5055
     volumes:
       - ./jellyseerr:/app/config
     restart: unless-stopped
-    networks: 
-      - netsec_proxy-net
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr:latest
-    #ports:
-    #  - "6969:6969"
+    ports:
+      - "6969:6969"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -329,9 +297,4 @@ services:
     volumes:
       - ./whisparr:/config
       - ${MEDIA_PATH}/whisparr:/data
-    networks:
-      - netsec_proxy-net
     restart: unless-stopped
-networks:
-  netsec_proxy-net:
-    external: true

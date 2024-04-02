@@ -10,11 +10,9 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./remmina:/config
-#    ports:
-#      - 3000:3000
-#      - 3001:3001
-    networks:
-      - netsec_proxy-net
+    ports:
+      - 3005:3000
+      - 3006:3001
     restart: unless-stopped
   webtop:
     image: lscr.io/linuxserver/webtop:latest
@@ -30,15 +28,10 @@ services:
     volumes:
       - ./webtop:/config
     #  - /var/run/docker.sock:/var/run/docker.sock #optional
-    #ports:
-    #  - 3000:3000
-    #  - 3001:3001
+    ports:
+      - 3030:3000
+      - 3031:3001
     devices:
       - /dev/dri:/dev/dri #optional
     shm_size: "1gb" #optional
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
-networks:
-  netsec_proxy-net:
-    external: true

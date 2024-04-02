@@ -4,13 +4,11 @@ services:
   wbo:
     image: lovasoa/wbo
     container_name: wbo
-    #ports:
-    #  - 5005:80
+    ports:
+      - 5005:80
     volumes:
       - ./wbo:/opt/app/server-data" 
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
   picoshare:
     image: mtlynch/picoshare
     container_name: picoshare
@@ -18,27 +16,23 @@ services:
       - PORT=4001
       - PS_SHARED_SECRET=${PICOSHARE_PASSWORD} # Change to any password
       - PS_BEHIND_PROXY=true
-#    ports:
-#      - 4001:4001
+    ports:
+      - 4001:4001
     command: -db /data/store.db
     volumes:
       - ./picoshare:/data
-    networks:
-      - netsec_proxy-net
     restart: unless-stopped
   linkding:
     container_name: linkding
     image: sissbruecker/linkding:latest
-#    ports:
-#      - 9090:9090  
+    ports:
+      - 9090:9090  
     environment:
       LD_SUPERUSER_NAME: $LD_SUPERUSER_NAME
       LD_SUPERUSER_PASSWORD: $LD_SUPERUSER_PASSWORD
       LD_DISABLE_URL_VALIDATION: True
     volumes:
       - "./linkding:/etc/linkding/data"
-    networks:
-      - netsec_proxy-net
     restart: unless-stopped
   heimdall:
     image: lscr.io/linuxserver/heimdall:latest
@@ -49,12 +43,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./heimdall:/config
-#    ports:
-#      - 8080:80
-#      - 8443:443
-    networks:
-      - netsec_proxy-net
+    ports:
+      - 8088:80
+      - 8443:443
     restart: unless-stopped
-networks:
-  netsec_proxy-net:
-    external: true

@@ -6,16 +6,14 @@ services:
     container_name: portainer
     restart: always
     command: -H unix:///var/run/docker.sock
-    #ports:
-    #  - 9000:9000
-    #  - 8000:8000
+    ports:
+      - 9000:9000
+      - 8000:8000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer:/data
     environment:
       - TZ=${TIMEZONE}
-    networks:
-      - netsec_proxy-net
   autoheal:
     container_name: autoheal
     restart: always
@@ -56,15 +54,13 @@ services:
       - PLAYWRIGHT_DRIVER_URL= #optional
     volumes:
       - ./changedetection.io:/config
-#    ports:
-#      - 5000:5000
-    networks:
-      - netsec_proxy-net
+    ports:
+      - 5050:5000
     restart: unless-stopped
   glances:
     container_name: glances
-#    ports:
-#      - 61208-61209:61208-61209
+    ports:
+      - 61208-61209:61208-61209
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -72,30 +68,21 @@ services:
     restart: always
     pid: host
     image: nicolargo/glances
-    networks: 
-      - netsec_proxy-net
   dozzle:
     container_name: dozzle
     image: amir20/dozzle
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    #ports:
-    #   - 9999:8080
-    networks:
-      - netsec_proxy-net
+    ports:
+       - 9999:8080
     restart: unless-stopped
   gotify:
     image: gotify/server
     container_name: gotify
-    #ports:
-    #  - 8080:80
+    ports:
+      - 8085:80
     environment:
       - GOTIFY_DEFAULTUSER_PASS=${GOTIFY_PASS}
     volumes:
       - "./gotify:/app/data"
     restart: unless-stopped
-    networks:
-      - netsec_proxy-net
-networks:
-  netsec_proxy-net:
-    external: true

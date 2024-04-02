@@ -8,14 +8,32 @@ services:
     ports:
       - 80:80 # Public HTTP Port
       - 443:443 # Public HTTPS Port
-    #  - 81:81 # Comment out after creating a proxy host for the service
+      - 81:81 # Comment out after creating a proxy host for the service
     environment:
       DISABLE_IPV6: "true"
     volumes:
       - ./nginxproxymanager/data:/data
       - ./nginxproxymanager/letsencrypt:/etc/letsencrypt
     networks:
-      - proxy-net
+      - default
+      - docfile-mgmt_default
+      - media-mgmt_default
+      - monitoring_default
+      - nextcloud_default
+      - misc_default 
+      - web-services_default
 networks:
-  proxy-net:
-    driver: bridge
+  docfile-mgmt_default:
+    external: true 
+  media-mgmt_default:
+    external: true 
+  monitoring_default:
+    external: true 
+  nextcloud_default:
+    external: true 
+  misc_default:
+    external: true 
+  web-services_default:
+    external: true
+  
+  
