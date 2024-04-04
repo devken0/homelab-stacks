@@ -15,7 +15,7 @@ services:
     container_name: onlyoffice-docs 
     restart: always
     environment:
-      - JWT_SECRET=elaborate-catwalk-onlyoffice-secret
+      - JWT_SECRET=${ONLYOFFICE_SECRET}
     expose:
       - '80'
       - '443'

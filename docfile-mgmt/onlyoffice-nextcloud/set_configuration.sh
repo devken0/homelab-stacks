@@ -11,14 +11,18 @@ fi
 
 rm trusted_domain.tmp
 
+read -p "Enter jwt secret: " ONLYOFFICE_SECRET
+read -p "Enter trusted domain name: " TRUSTED_DOMAIN_NAME
+
 docker exec -u www-data nextcloud php occ --no-warnings app:install onlyoffice
 
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set onlyoffice DocumentServerUrl --value="/ds-vpath/"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set onlyoffice DocumentServerInternalUrl --value="http://onlyoffice-docs/"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set onlyoffice StorageUrl --value="http://nextcloud-proxy/"
-docker exec -u www-data nextcloud php occ --no-warnings config:system:set onlyoffice jwt_secret --value="elaborate-catwalk-onlyoffice-secret"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set onlyoffice jwt_secret --value="$ONLYOFFICE_SECRET"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set filesystem_check_changes --type=integer --value="1"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set maintenance_window_start --type=integer --value="1"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set trusted_domains 2 --value="$TRUSTED_DOMAIN_NAME"
 
 docker exec -u www-data nextcloud php occ --no-warnings app:disable activity 
 docker exec -u www-data nextcloud php occ --no-warnings app:disable photos 
@@ -30,4 +34,5 @@ docker exec -u www-data nextcloud php occ --no-warnings app:install tasks
 docker exec -u www-data nextcloud php occ --no-warnings app:install maps
 docker exec -u www-data nextcloud php occ --no-warnings app:install external
 docker exec -u www-data nextcloud php occ --no-warnings app:enable files_external
+
 
