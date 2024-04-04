@@ -1,6 +1,20 @@
 ---
 version: "3.8"
 services:
+  homer:
+    image: b4bz/homer:latest
+    #to build from source, comment previous line and uncomment below
+    #build: .
+    container_name: homer
+    volumes:
+      - ./homer:/www/assets
+    environment:
+      - init_assets=1
+      - ipv6_disable=1
+    ports:
+      - 8087:8080
+    user: ${PUID}:${PGID} # default
+    restart: unless-stopped
   wbo:
     image: lovasoa/wbo
     container_name: wbo
@@ -33,17 +47,4 @@ services:
       LD_DISABLE_URL_VALIDATION: True
     volumes:
       - "./linkding:/etc/linkding/data"
-    restart: unless-stopped
-  heimdall:
-    image: lscr.io/linuxserver/heimdall:latest
-    container_name: heimdall
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TIMEZONE}
-    volumes:
-      - ./heimdall:/config
-    ports:
-      - 8088:80
-      - 8443:443
     restart: unless-stopped
