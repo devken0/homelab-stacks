@@ -186,4 +186,5 @@ services:
     volumes:
       - ./whisparr:/config
       - ${MEDIA_PATH}/whisparr:/data
+      - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     restart: unless-stopped
