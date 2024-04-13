@@ -1,6 +1,21 @@
 ---
 version: "3.8"
 services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS= #optional
+    volumes:
+      - ./jackett:/config
+      - ${DOWNLOADS_PATH}:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr

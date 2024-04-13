@@ -1,19 +1,18 @@
 ---
 version: "3.8"
 services:
-  homer:
-    image: b4bz/homer:latest
-    #to build from source, comment previous line and uncomment below
-    #build: .
-    container_name: homer
-    volumes:
-      - ./homer:/www/assets
-    environment:
-      - init_assets=1
-      - ipv6_disable=1
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
     ports:
-      - 8087:8080
-    user: ${PUID}:${PGID} # default
+      - 3009:3000
+    volumes:
+      - ./homepage/config:/app/config # Make sure your local config directory exists
+      #- ./homepage/images:/app/public/images # for setting background images
+      - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations, see alternative methods
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
     restart: unless-stopped
   wbo:
     image: lovasoa/wbo
