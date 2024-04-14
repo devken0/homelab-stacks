@@ -22,7 +22,10 @@ services:
       - nextcloud_default
       - misc_default 
       - web-services_default
+      - nextcloud-aio
 networks:
+  nextcloud-aio:
+    external: true
   docfile-mgmt_default:
     external: true 
   media-mgmt_default:
