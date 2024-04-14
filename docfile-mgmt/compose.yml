@@ -6,7 +6,23 @@ networks:
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
+  onlyoffice_data:
+  onlyoffice_log:
 services:
+  onlyoffice-document-server:
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice-docs
+    restart: always
+    environment:
+      - JWT_SECRET=${ONLYOFFICE_SECRET}
+    expose:
+      - '80'
+      - '443'
+    volumes:
+      - onlyoffice_data:/var/www/onlyoffice/Data
+      - onlyoffice_log:/var/log/onlyoffice
+    networks:
+      - nextcloud-aio
   nextcloud-aio-mastercontainer:
     image: nextcloud/all-in-one:latest
     container_name: nextcloud-aio-mastercontainer

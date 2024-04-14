@@ -19,7 +19,6 @@ services:
       - docfile-mgmt_default
       - media-mgmt_default
       - monitoring_default
-      - nextcloud_default
       - misc_default 
       - web-services_default
       - nextcloud-aio
@@ -31,8 +30,6 @@ networks:
   media-mgmt_default:
     external: true 
   monitoring_default:
-    external: true 
-  nextcloud_default:
     external: true 
   misc_default:
     external: true 
