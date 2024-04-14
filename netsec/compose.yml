@@ -21,9 +21,9 @@ services:
       - monitoring_default
       - misc_default 
       - web-services_default
-      - nextcloud-aio
+      - onlyoffice-nextcloud_default
 networks:
-  nextcloud-aio:
+  onlyoffice-nextcloud_default:
     external: true
   docfile-mgmt_default:
     external: true 

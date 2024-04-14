@@ -1,47 +1,5 @@
 ---
 version: "3.8" 
-networks:
-  nextcloud-aio:
-    external: true
-volumes:
-  nextcloud_aio_mastercontainer:
-    name: nextcloud_aio_mastercontainer
-  onlyoffice_data:
-  onlyoffice_log:
-services:
-  onlyoffice-document-server:
-    image: onlyoffice/documentserver:latest
-    container_name: onlyoffice-docs
-    restart: always
-    environment:
-      - JWT_SECRET=${ONLYOFFICE_SECRET}
-    expose:
-      - '80'
-      - '443'
-    volumes:
-      - onlyoffice_data:/var/www/onlyoffice/Data
-      - onlyoffice_log:/var/log/onlyoffice
-    networks:
-      - nextcloud-aio
-  nextcloud-aio-mastercontainer:
-    image: nextcloud/all-in-one:latest
-    container_name: nextcloud-aio-mastercontainer
-    init: true
-    restart: always
-    ports:
-      - 8089:8080
-    environment:
-      APACHE_PORT: 11000
-      APACHE_IP_BINDING: "0.0.0.0"
-      NEXTCLOUD_DATADIR: "/mnt/nextcloud"
-      NEXTCLOUD_MOUNT: "/mnt/"
-      SKIP_DOMAIN_VALIDATION: true
-      #NEXTCLOUD_ENABLE_DRI_DEVICE: true
-    volumes:
-      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - nextcloud-aio
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
     container_name: syncthing
