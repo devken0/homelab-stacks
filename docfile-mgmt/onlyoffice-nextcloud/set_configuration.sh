@@ -25,6 +25,12 @@ docker exec -u www-data nextcloud php occ --no-warnings app:install onlyoffice
 #docker exec -u www-data nextcloud php occ --no-warnings config:system:set filesystem_check_changes --type=integer --value="1"
 #docker exec -u www-data nextcloud php occ --no-warnings config:system:set maintenance_window_start --type=integer --value="1"
 #docker exec -u www-data nextcloud php occ --no-warnings config:system:set trusted_domains 2 --value="$TRUSTED_DOMAIN_NAME"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set 'enable_previews' --type=bool --value=true
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 0 --value="OC\\Preview\\TXT"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 1 --value="OC\\Preview\\Image"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 2 --value="OC\\Preview\\Movie"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 3 --value="OC\\Preview\\MP4"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 4 --value="OC\\Preview\\GIF"
 
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable activity 
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable photos 
