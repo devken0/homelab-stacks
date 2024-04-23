@@ -25,12 +25,23 @@ docker exec -u www-data nextcloud php occ --no-warnings app:install onlyoffice
 #docker exec -u www-data nextcloud php occ --no-warnings config:system:set filesystem_check_changes --type=integer --value="1"
 #docker exec -u www-data nextcloud php occ --no-warnings config:system:set maintenance_window_start --type=integer --value="1"
 #docker exec -u www-data nextcloud php occ --no-warnings config:system:set trusted_domains 2 --value="$TRUSTED_DOMAIN_NAME"
+
+# https://www.allerstorfer.at/nextcloud-install-preview-generator/
+docker exec -u www-data nextcloud php occ --no-warnings app:install previewgenerator
+#docker exec nextcloud apt install libreoffice libreoffice-l10n-de libreoffice-help-de 
+docker exec nextcloud apt install ffmpeg imagemagick ghostscript 
+
+#docker exec -u www-data nextcloud php occ --no-warnings config:system:set 'preview_libreoffice_path' --value='/usr/bin/libreoffice'
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set 'enable_previews' --type=bool --value=true
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 0 --value="OC\\Preview\\TXT"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 1 --value="OC\\Preview\\Image"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 2 --value="OC\\Preview\\Movie"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 3 --value="OC\\Preview\\MP4"
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 4 --value="OC\\Preview\\GIF"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 5 --value="OC\\Preview\\Markdown"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 6 --value="OC\\Preview\\OpenDocument"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 7 --value="OC\\Preview\\MSOffice2003"
+docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 8 --value="OC\\Preview\\MSOfficeDoc"
 
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable activity 
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable photos 
