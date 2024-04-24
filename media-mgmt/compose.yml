@@ -1,6 +1,34 @@
 ---
 version: "3.8"
 services:
+  ytdl_material:
+    environment:
+      ytdl_mongodb_connection_string: 'mongodb://ytdl-mongo-db:27017'
+      ytdl_use_local_db: 'false'
+      write_ytdl_config: 'true'
+      UID: ${PUID}
+      GID: ${PGID}
+    restart: always
+    depends_on:
+      - ytdl-mongo-db
+    volumes:
+      - ./youtubedl-material/appdata:/app/appdata
+      - ${MEDIA_PATH}/youtubedl/audio:/app/audio
+      - ${MEDIA_PATH}/youtubedl/video:/app/video
+      - ./youtubedl-material/subscriptions:/app/subscriptions
+      - ./youtubedl-material/users:/app/users
+    ports:
+      - "8998:17442"
+    image: tzahi12345/youtubedl-material:latest
+  ytdl-mongo-db:
+    # If you are using a Raspberry Pi, use mongo:4.4.18
+    image: mongo:4
+    logging:
+      driver: "none"
+    container_name: mongo-db
+    restart: always
+    volumes:
+      - ./youtubedl-material/db/:/data/db
   jackett:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
