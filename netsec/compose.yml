@@ -1,6 +1,12 @@
 ---
 version: "3.8"
 services:
+  nessus:
+    image: tenable/nessus:latest-ubuntu
+    restart: unless-stopped
+    container_name: nessus
+    ports: 
+      - 8834:8834
   nginxproxymanager:
     image: jc21/nginx-proxy-manager:latest
     restart: always
