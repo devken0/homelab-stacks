@@ -44,7 +44,7 @@ docker exec -u www-data nextcloud php occ --no-warnings config:system:set enable
 docker exec -u www-data nextcloud php occ --no-warnings config:system:set enabledPreviewProviders 8 --value="OC\\Preview\\MSOfficeDoc"
 
 docker exec -u www-data nextcloud php /var/www/nextcloud/occ preview:generate-all -vvv
-(crontab -l ; echo "*/10 * * * * docker exec -u www-data nextcloud php /var/www/nextcloud/occ preview:pre-generate -vvv") | crontab -
+(crontab -l ; echo "*/10 * * * * docker exec -u www-data nextcloud php occ preview:pre-generate -vvv") | crontab -
 
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable activity 
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable photos 

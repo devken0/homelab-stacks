@@ -10,6 +10,7 @@ services:
     volumes:
       - app_data:/var/www/html
       - /mnt/nextcloud:/var/www/html/data
+      - /mnt/archives:/mnt/archives
     environment:
       - MYSQL_HOST=db
       - MYSQL_DATABASE=nextcloud
