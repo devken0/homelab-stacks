@@ -9,6 +9,7 @@ services:
       - '9000'
     volumes:
       - app_data:/var/www/html
+      - app_packages:/usr/bin
       - /mnt/nextcloud:/var/www/html/data
       - /mnt/archives:/mnt/archives
     environment:
@@ -55,4 +56,5 @@ volumes:
   document_data:
   document_log:
   app_data:
+  app_packages:
   db_data:
