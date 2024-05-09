@@ -27,10 +27,10 @@ services:
       - ytdl-mongo-db
     volumes:
       - ./youtubedl-material/appdata:/app/appdata
-      - ${MEDIA_PATH}/youtubedl/audio:/app/audio
-      - ${MEDIA_PATH}/youtubedl/video:/app/video
-      - ./youtubedl-material/subscriptions:/app/subscriptions
-      - ./youtubedl-material/users:/app/users
+      - ${MEDIA_PATH}/ytdl/audio:/app/audio
+      - ${MEDIA_PATH}/ytdl/video:/app/video
+      - ${MEDIA_PATH}/ytdl/subscriptions:/app/subscriptions
+      - ${MEDIA_PATH}/ytdl/users:/app/users
     ports:
       - "8998:17442"
     image: tzahi12345/youtubedl-material:latest
@@ -229,19 +229,4 @@ services:
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     ports:
       - 8686:8686
-    restart: unless-stopped
-  whisparr:
-    container_name: whisparr
-    image: ghcr.io/hotio/whisparr:latest
-    ports:
-      - "6969:6969"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - UMASK=002
-      - TZ=${TIMEZONE}
-    volumes:
-      - ./whisparr:/config
-      - ${MEDIA_PATH}/whisparr:/data
-      - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     restart: unless-stopped
