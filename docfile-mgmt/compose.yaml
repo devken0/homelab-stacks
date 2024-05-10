@@ -1,0 +1,104 @@
+---
+version: "3.8" 
+services:
+  libreoffice:
+    image: lscr.io/linuxserver/libreoffice:latest
+    container_name: libreoffice
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=${NEXTCLOUD_DATA_UID}
+      - PGID=${NEXTCLOUD_DATA_GID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./libreoffice:/config
+      - ${NEXTCLOUD_DATA}/Documents:/data
+    ports:
+      - 3300:3000
+      - 3100:3001
+    restart: unless-stopped
+  resilio-sync:
+    image: lscr.io/linuxserver/resilio-sync:latest
+    container_name: resilio-sync
+    environment:
+      - PUID=${NEXTCLOUD_DATA_UID}
+      - PGID=${NEXTCLOUD_DATA_GID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./resilio-sync:/config
+      - ${DOWNLOADS_PATH}:/downloads
+      - ${NEXTCLOUD_DATA}/Sync:/sync
+    ports:
+      - 8888:8888
+      - 55555:55555
+    restart: unless-stopped
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    hostname: ${HOSTNAME} #optional
+    environment:
+      - PUID=${NEXTCLOUD_DATA_UID}
+      - PGID=${NEXTCLOUD_DATA_GID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./syncthing:/config
+      - ${NEXTCLOUD_DATA}/Sync/App_Backups:/data/App_Backups
+      - ${NEXTCLOUD_DATA}/Sync/App_Exports:/data/App_Exports
+      - ${NEXTCLOUD_DATA}/Sync/DCIM:/data/DCIM
+      - ${NEXTCLOUD_DATA}/Sync/Dropbox:/data/Dropbox
+      - ${NEXTCLOUD_DATA}/Sync/Music:/data/Music
+      - ${NEXTCLOUD_DATA}/Sync/Pictures:/data/Pictures
+      - ${NEXTCLOUD_DATA}/Sync/Sounds:/data/Sounds
+    ports:
+      - 8384:8384
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
+  stirling-pdf:
+    image: frooodle/s-pdf:latest
+    container_name: stirling-pdf
+    ports:
+      - '8080:8080'
+    volumes:
+    #  - ./stirling-pdf/training-data:/usr/share/tesseract-ocr/4.00/tessdata #Required for extra OCR languages
+      - ./stirling-pdf/data:/configs
+    #  - /location/of/customFiles:/customFiles/
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+    restart: unless-stopped
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - CLI_ARGS= #optional
+    volumes:
+      - ./duplicati:/config
+      - ${DUPLICATI_BACKUP_PATH}:/backups
+      - ${DUPLICATI_SOURCE_PATH}:/source
+      #- /mnt/directory:/data # additional directories to backup 
+    ports:
+      - 8200:8200
+    restart: unless-stopped
+  wikijs:
+    image: lscr.io/linuxserver/wikijs:latest
+    container_name: wikijs
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - DB_TYPE=sqlite #optional
+      - DB_HOST= #optional
+      - DB_PORT= #optional
+      - DB_NAME= #optional
+      - DB_USER= #optional
+      - DB_PASS= #optional
+    volumes:
+      - ./wikijs/config:/config
+      - ./wikijs/data:/data
+    ports:
+      - 3000:3000
+    restart: unless-stopped
