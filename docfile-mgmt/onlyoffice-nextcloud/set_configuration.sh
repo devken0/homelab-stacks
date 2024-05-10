@@ -57,4 +57,5 @@ docker exec -u www-data nextcloud php occ --no-warnings app:install maps
 docker exec -u www-data nextcloud php occ --no-warnings app:install external
 #docker exec -u www-data nextcloud php occ --no-warnings app:enable files_external
 
+docker exec -it nextcloud /bin/bash -c "apt update && apt install -y ffmpeg imagemagick ghostscript"
 
