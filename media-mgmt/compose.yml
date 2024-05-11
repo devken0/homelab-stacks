@@ -130,7 +130,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./readarr:/config
-      - ${MEDIA_PATH}/ebooks:/books #optional
+      - ${MEDIA_PATH}/books:/books #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     ports:
       - 8787:8787
@@ -200,7 +200,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./kavita:/config
-      - ${MEDIA_PATH}/ebooks:/data
+      - ${MEDIA_PATH}/books:/data
     ports:
       - 5000:5000
     restart: unless-stopped
