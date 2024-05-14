@@ -1,19 +1,6 @@
 ---
 version: "3.8"
 services:
-  handbrake:
-    image: jlesage/handbrake
-    container_name: handbrake
-    ports:
-      - "5800:5800"
-    volumes:
-      - "./handbrake:/config:rw"
-      - "${MEDIA_PATH}:/storage:ro"
-      - "${MEDIA_PATH}/HandBrake/watch:/watch:rw"
-      - "${MEDIA_PATH}/HandBrake/output:/output:rw"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
   ytdl_material:
     container_name: ytdl_material
     environment:
@@ -27,10 +14,10 @@ services:
       - ytdl-mongo-db
     volumes:
       - ./youtubedl-material/appdata:/app/appdata
-      - ${MEDIA_PATH}/ytdl/audio:/app/audio
-      - ${MEDIA_PATH}/ytdl/video:/app/video
-      - ${MEDIA_PATH}/ytdl/subscriptions:/app/subscriptions
-      - ${MEDIA_PATH}/ytdl/users:/app/users
+      - ${MEDIA_PATH}/audio/music:/app/audio
+      - ${MEDIA_PATH}/video/web:/app/video
+      #- ${MEDIA_PATH}/ytdl/subscriptions:/app/subscriptions
+      #- ${MEDIA_PATH}/ytdl/users:/app/users
     ports:
       - "8998:17442"
     image: tzahi12345/youtubedl-material:latest
@@ -83,7 +70,7 @@ services:
       ND_BASEURL: "${NAVIDROME_BASEURL}"
     volumes:
       - "./navidrome:/data"
-      - "${MEDIA_PATH}/music:/music:ro"
+      - "${MEDIA_PATH}/audio/music:/music:ro"
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -93,7 +80,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - "./sonarr:/config"
-      - "${MEDIA_PATH}/tv_shows:/tv" #optional
+      - "${MEDIA_PATH}/video/tv_shows:/tv" #optional
       - "${DOWNLOADS_PATH}/torrents:/downloads" #optional
     ports:
       - 8989:8989
@@ -104,7 +91,7 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - "${DOWNLOADS_PATH}/openbooks:/books"
+      - "${DOWNLOADS_PATH}:/books"
     command: "--persist --name ${OPENBOOKS_USERNAME}"
     restart: unless-stopped
   radarr:
@@ -116,7 +103,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./radarr:/config
-      - ${MEDIA_PATH}/movies:/movies #optional
+      - ${MEDIA_PATH}/video/movies:/movies #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     ports:
       - 7878:7878
@@ -161,8 +148,8 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./bazaarr:/config
-      - ${MEDIA_PATH}/movies:/movies #optional
-      - ${MEDIA_PATH}/tv_shows:/tv #optional
+      - ${MEDIA_PATH}/video/movies:/movies #optional
+      - ${MEDIA_PATH}/video/tv_shows:/tv #optional
     ports:
       - 6767:6767
     restart: unless-stopped
@@ -184,8 +171,8 @@ services:
     ports:
       - 13378:80
     volumes:
-      - ${MEDIA_PATH}/audiobooks:/audiobooks
-      - ${MEDIA_PATH}/podcasts:/podcasts
+      - ${MEDIA_PATH}/audio/audiobooks:/audiobooks
+      - ${MEDIA_PATH}/audio/podcasts:/podcasts
       - ./audiobookshelf/config:/config
       - ./audiobookshelf/metadata:/metadata
     environment:
@@ -225,7 +212,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./lidarr:/config
-      - ${MEDIA_PATH}/music:/music #optional
+      - ${MEDIA_PATH}/audio/music:/music #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     ports:
       - 8686:8686
