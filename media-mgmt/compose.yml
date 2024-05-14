@@ -47,8 +47,8 @@ services:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=1000
+      - PGID=1000
       - TZ=${TIMEZONE}
       - AUTO_UPDATE=true #optional
       - RUN_OPTS= #optional
