@@ -9,7 +9,7 @@ services:
       - '9000'
     volumes:
       - app_data:/var/www/html
-      - app_packages:/usr/bin
+      - app_packages:/usr
       - /mnt/nextcloud:/var/www/html/data
       - /mnt/archives:/mnt/archives
     environment:
