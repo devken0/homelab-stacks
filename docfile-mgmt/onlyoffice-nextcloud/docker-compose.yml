@@ -2,6 +2,8 @@ version: '3'
 services:
   app:
     image: nextcloud:fpm
+    command: >
+      sh -c "apt update && apt install -y ffmpeg imagemagick ghostscript && exec php-fpm" 
     container_name: nextcloud 
     restart: always
     expose:
@@ -9,7 +11,6 @@ services:
       - '9000'
     volumes:
       - app_data:/var/www/html
-      - app_packages:/usr
       - /mnt/nextcloud:/var/www/html/data
       - /mnt/archives:/mnt/archives
     environment:
@@ -56,5 +57,4 @@ volumes:
   document_data:
   document_log:
   app_data:
-  app_packages:
   db_data:
