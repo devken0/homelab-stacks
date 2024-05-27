@@ -75,9 +75,9 @@ services:
     image: "spotdl/spotify-downloader"
     container_name: spotdl
     restart: unless-stopped
-    command: web --host 0.0.0.0 --web-use-output-dir
-    ports:
-      - 8810:8800
+    #command: web --host 0.0.0.0 --web-use-output-dir
+    #ports:
+    #  - 8810:8800
     volumes:
       - "${MEDIA_PATH}/audio/music:/music"
   sonarr:
