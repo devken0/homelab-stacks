@@ -71,6 +71,15 @@ services:
     volumes:
       - "./navidrome:/data"
       - "${MEDIA_PATH}/audio/music:/music:ro"
+  spotdl:
+    image: "spotdl/spotify-downloader"
+    container_name: spotdl
+    restart: unless-stopped
+    command: web --host 0.0.0.0 --web-use-output-dir
+    ports:
+      - 8810:8800
+    volumes:
+      - "${MEDIA_PATH}/audio/music:/music"
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
