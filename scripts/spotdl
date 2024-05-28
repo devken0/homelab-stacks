@@ -1,0 +1,12 @@
+#!/bin/bash
+
+compose_directory="/root/docker-compose/media-mgmt/"
+
+# Check if the URL argument is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <url>"
+    exit 1
+fi
+
+# Run the Docker command with the provided URL
+cd "$compose_directory" && docker compose --env-file ../.env run --rm spotdl download "$1"
