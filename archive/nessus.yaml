@@ -1,0 +1,6 @@
+  nessus:
+    image: tenable/nessus:latest-ubuntu
+    restart: unless-stopped
+    container_name: nessus
+    ports:
+      - 8834:8834
