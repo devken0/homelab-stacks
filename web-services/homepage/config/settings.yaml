@@ -1,7 +1,50 @@
 ---
-# For configuration options and examples, please see:
-# https://gethomepage.dev/latest/configs/settings
+# Docs - https://gethomepage.dev/latest/configs/settings/
 
+title: My Awesome Homepage
+language: en-PH
+target: _blank # Possible options include _blank, _self, and _top
+headerStyle: underlined # underlined (default), boxed, clean, boxedWidgets  
+#base: http://host.local/homepage # for proxies, the URL must be a full, absolute URL, or it will be ignored by the browser.
+#startUrl: https://custom.url # required for installable apps, "/" by default.
+hideVersion: true
+#logpath: /logfile/path
+quicklaunch:
+  searchDescriptions: false # off by default
+  hideInternetSearch: false # false by default
+  showSearchSuggestions: true 
+  hideVisitURL: false # off by default
+background: 
+  image: https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80 
+#  blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
+#  saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+#  brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+  opacity: 50 # 0-100
+cardBlur: sm # incompatible with background filters
+#favicon: https://www.google.com/favicon.ico
+theme: dark
+color: zinc # Supported colors are: slate, gray, zinc, neutral, stone, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, red, white
+layout:
+  My First Group:
+    style: row # or style: column
+    columns: 4 # or rows: X
+    #header: false # section header 
+    #icon: https://cdn-icons-png.flaticon.com/512/252/252035.png 	
+    #initiallyCollapsed: true # overrides global setting
+    #useEqualHeights: true # overrides global setting
+#iconStyle: theme # optional, defaults to gradient
+#fiveColumns: true # four columns by default
+#disableCollapse: true # enabled by default
+groupsInitiallyCollapsed: false # disabled by default 
+useEqualHeights: true 
+showStats: true # docker stats
+statusStyle: "dot" # or basic
+#instanceName: public # name used by automatic docker service discovery to differentiate between multiple homepage instances.
+#hideErrors: true # hide widget error messages
 providers:
   openweathermap: openweathermapapikey
   weatherapi: weatherapiapikey
+  longhorn:
+    url: https://longhorn.example.com
+    username: admin
+    password: LonghornPassword

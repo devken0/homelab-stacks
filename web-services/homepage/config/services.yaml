@@ -1,11 +1,36 @@
 ---
-# For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/services
 
 - My First Group:
     - My First Service:
         href: http://localhost/
         description: Homepage is awesome
+	siteMonitor: http:// # formerly ping
+        # docker integration
+        server:
+        container:
+
+# Radarr and Sonarr Example Integration
+- Group A:
+    - Sonarr:
+        icon: sonarr.png
+        href: http://sonarr.host/
+        description: Series management
+        widget:
+          type: sonarr
+          fields: ["wanted", "queued"] # for displaying specific fields only
+          url: http://sonarr.host
+          key: apikeyapikeyapikeyapikeyapikey
+
+- Group B:
+    - Radarr:
+        icon: radarr.png
+        href: http://radarr.host/
+        description: Movie management
+        widget:
+          type: radarr
+          url: http://radarr.host
+          key: apikeyapikeyapikeyapikeyapikey
 
 - My Second Group:
     - My Second Service:
