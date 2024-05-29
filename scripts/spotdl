@@ -1,12 +1,21 @@
 #!/bin/bash
 
-compose_directory="/root/docker-compose/media-mgmt/"
+compose_directory="/root/docker-compose/media-mgmt"
 
-# Check if the URL argument is provided
-if [ -z "$1" ]; then
-    echo "Usage: $0 <url>"
+# Check if at least one URL argument is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <url1> <url2> ... <urlN>"
     exit 1
 fi
 
-# Run the Docker command with the provided URL
-cd "$compose_directory" && docker compose --env-file ../.env run --rm spotdl download "$1"
+# Change to the compose directory
+if ! cd "$compose_directory"; then
+    echo "Failed to change directory to $compose_directory"
+    exit 1
+fi
+
+# Run the Docker command for each provided URL
+for url in "$@"; do 
+    docker compose --env-file ../.env run --rm spotdl download "$url"
+done
+
