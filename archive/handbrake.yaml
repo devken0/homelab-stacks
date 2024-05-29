@@ -1,0 +1,13 @@
+  handbrake:
+    image: jlesage/handbrake
+    container_name: handbrake
+    ports:
+      - "5800:5800"
+    volumes:
+      - "./handbrake:/config:rw"
+      - "${MEDIA_PATH}:/storage:ro"
+      - "${MEDIA_PATH}/HandBrake/watch:/watch:rw"
+      - "${MEDIA_PATH}/HandBrake/output:/output:rw"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}

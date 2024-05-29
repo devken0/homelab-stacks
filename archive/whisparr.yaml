@@ -1,0 +1,15 @@
+  whisparr:
+    container_name: whisparr
+    image: ghcr.io/hotio/whisparr:latest
+    ports:
+      - "6969:6969"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=002
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./whisparr:/config
+      - ${MEDIA_PATH}/whisparr:/data
+      - ${DOWNLOADS_PATH}/torrents:/downloads #optional
+    restart: unless-stopped
