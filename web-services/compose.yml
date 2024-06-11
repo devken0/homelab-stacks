@@ -19,6 +19,8 @@ services:
     environment:
       PUID: ${PUID}
       PGID: ${PGID}
+    env_file:
+      - ./homepage/.env
     restart: unless-stopped
   wbo:
     image: lovasoa/wbo

@@ -1,12 +1,33 @@
 ---
 # For configuration options and examples, please see:
-# https://gethomepage.dev/latest/configs/service-widgets
+# https://gethomepage.dev/latest/widgets
 
-- resources:
-    cpu: true
-    memory: true
-    disk: /
-
+#- logo:
+#    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/I_Love_New_York.svg/1101px-I_Love_New_York.svg.png # optional
+#- greeting:
+#    text_size: xl # valid text sizes are 4xl, 3xl, 2xl, xl, md, sm, xs.
+#    text: Greeting Text
 - search:
+    focus: true
     provider: duckduckgo
-    target: _blank
+    showSearchSuggestions: true
+    target: _self 
+- openmeteo:
+    label: Taguig # optional
+    latitude: 14.5243 
+    longitude: 121.0792
+    timezone: Asia/Singapore # optional
+    units: metric # or imperial
+    cache: 5 # Time in minutes to cache API responses, to stay within limits
+    format: # optional, Intl.NumberFormat options
+      maximumFractionDigits: 1
+#- datetime:
+#    text_size: md # valid text sizes are 4xl, 3xl, 2xl, xl, md, sm, xs
+#    format:
+#      dateStyle: short
+#      timeStyle: short
+#      hourCycle: h23
+#- resources:
+#    cpu: true
+#    memory: true
+#    disk: /

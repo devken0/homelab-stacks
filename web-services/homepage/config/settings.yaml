@@ -10,7 +10,7 @@ headerStyle: underlined # underlined (default), boxed, clean, boxedWidgets
 hideVersion: true
 #logpath: /logfile/path
 quicklaunch:
-  searchDescriptions: false # off by default
+  #searchDescriptions: true # off by default
   hideInternetSearch: false # false by default
   showSearchSuggestions: true 
   hideVisitURL: false # off by default
@@ -25,26 +25,27 @@ cardBlur: sm # incompatible with background filters
 theme: dark
 color: zinc # Supported colors are: slate, gray, zinc, neutral, stone, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, red, white
 layout:
-  My First Group:
+  #Documents & Files:
+  #Media:
     style: row # or style: column
     columns: 4 # or rows: X
-    #header: false # section header 
+    header: false # section header 
     #icon: https://cdn-icons-png.flaticon.com/512/252/252035.png 	
     #initiallyCollapsed: true # overrides global setting
     #useEqualHeights: true # overrides global setting
 #iconStyle: theme # optional, defaults to gradient
-#fiveColumns: true # four columns by default
-#disableCollapse: true # enabled by default
+fiveColumns: true # four columns by default
+disableCollapse: true # enabled by default
 groupsInitiallyCollapsed: false # disabled by default 
 useEqualHeights: true 
-showStats: true # docker stats
-statusStyle: "dot" # or basic
+showStats: false # docker stats
+statusStyle: "basic" # dot or basic
 #instanceName: public # name used by automatic docker service discovery to differentiate between multiple homepage instances.
 #hideErrors: true # hide widget error messages
 providers:
   openweathermap: openweathermapapikey
   weatherapi: weatherapiapikey
-  longhorn:
-    url: https://longhorn.example.com
-    username: admin
-    password: LonghornPassword
+  #longhorn:
+  #  url: https://longhorn.example.com
+  #  username: admin
+  #  password: LonghornPassword

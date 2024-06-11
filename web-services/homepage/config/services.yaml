@@ -1,43 +1,73 @@
 ---
 # https://gethomepage.dev/latest/configs/services
 
-- My First Group:
-    - My First Service:
-        href: http://localhost/
-        description: Homepage is awesome
-	siteMonitor: http:// # formerly ping
-        # docker integration
-        server:
-        container:
+- My Third Group:
+    - pve1:
+        icon: proxmox 
+        href: {{HOMEPAGE_VAR_PROXMOX_SITE}}
+        description: Hypervisor
+        siteMonitor: {{HOMEPAGE_VAR_PROXMOX_SITE}} # formerly ping
+        # https://gethomepage.dev/latest/widgets/services/proxmox/
+        widget: 
+          type: proxmox
+          url: https://{{HOMEPAGE_VAR_PROXMOX_IP}}:8006
+          username: {{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}
+          password: {{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}
+          node: pve1 # optional
+          # Allowed fields: ["vms", "lxc", "resources.cpu", "resources.mem"]
 
-# Radarr and Sonarr Example Integration
-- Group A:
+- Documents & Files:
+    - Nextcloud:
+        icon: nextcloud
+        href: {{HOMEPAGE_VAR_NEXTCLOUD_SITE}} 
+        description: My personal cloud 
+        server: my-docker
+        container: nextcloud
+        widget: 
+          type: nextcloud
+          url: http://{{HOMEPAGE_VAR_DOCKER_IP}}:82
+          username: {{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}
+          password: {{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}} 
+    - Duplicati:
+        icon: duplicati
+        href: {{HOMEPAGE_VAR_DUPLICATI_SITE}}
+        description: Incremental backup server
+        server: my-docker
+        container: duplicati
+- Media Automation:
     - Sonarr:
         icon: sonarr.png
-        href: http://sonarr.host/
+        href: {{HOMEPAGE_VAR_SONARR_SITE}}
         description: Series management
+        server: my-docker 
+        container: sonarr
         widget:
           type: sonarr
-          fields: ["wanted", "queued"] # for displaying specific fields only
-          url: http://sonarr.host
-          key: apikeyapikeyapikeyapikeyapikey
-
-- Group B:
+          url: http://{{HOMEPAGE_VAR_DOCKER_IP}}:8989
+          key: {{HOMEPAGE_VAR_SONARR_APIKEY}}
+          enableQueue: false 
+          #fields: ["wanted", "queued"] # Allowed fields: ["wanted", "queued", "series"]
     - Radarr:
         icon: radarr.png
-        href: http://radarr.host/
+        href: {{HOMEPAGE_VAR_RADARR_SITE}}
         description: Movie management
+        server: my-docker
+        container: radarr
         widget:
           type: radarr
-          url: http://radarr.host
-          key: apikeyapikeyapikeyapikeyapikey
-
-- My Second Group:
-    - My Second Service:
-        href: http://localhost/
-        description: Homepage is the best
-
-- My Third Group:
-    - My Third Service:
-        href: http://localhost/
-        description: Homepage is 😎
+          url: http://{{HOMEPAGE_VAR_DOCKER_IP}}:7878
+          key: {{HOMEPAGE_VAR_RADARR_APIKEY}}
+          #enableQueue: true # optional, defaults to false
+          # Allowed fields: ["wanted", "missing", "queued", "movies"]
+- Download:
+    - Deluge:
+        icon: deluge
+        href: {{HOMEPAGE_VAR_DELUGE_SITE}}
+        description: Torrent downloader
+        server: my-docker
+        container: deluge 
+        widget:
+          type: deluge
+          url: http://{{HOMEPAGE_VAR_DOCKER_IP}}:8112
+          password: {{HOMEPAGE_VAR_DELUGE_PASSWORD}}
+          # Allowed fields: ["leech", "download", "seed", "upload"]
