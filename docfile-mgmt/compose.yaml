@@ -27,13 +27,6 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./syncthing:/config
-      - ${NEXTCLOUD_DATA}/Sync/App_Backups:/data/App_Backups
-      - ${NEXTCLOUD_DATA}/Sync/App_Exports:/data/App_Exports
-      - ${NEXTCLOUD_DATA}/Sync/DCIM:/data/DCIM
-      - ${NEXTCLOUD_DATA}/Sync/Dropbox:/data/Dropbox
-      - ${NEXTCLOUD_DATA}/Sync/Music:/data/Music
-      - ${NEXTCLOUD_DATA}/Sync/Pictures:/data/Pictures
-      - ${NEXTCLOUD_DATA}/Sync/Sounds:/data/Sounds
     ports:
       - 8384:8384
       - 22000:22000/tcp

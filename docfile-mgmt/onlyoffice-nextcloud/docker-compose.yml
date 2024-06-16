@@ -12,8 +12,7 @@ services:
     volumes:
       - app_data:/var/www/html
       - /mnt/nextcloud:/var/www/html/data
-      - /mnt/backups/pc/Nextcloud_Bookmarks:/mnt/bookmarks/Backups
-      - /mnt/archives/websites:/mnt/bookmarks/Archive
+      - /mnt/backups/pc/Nextcloud_Bookmarks:/mnt/bookmark_backups
     environment:
       - MYSQL_HOST=db
       - MYSQL_DATABASE=nextcloud
