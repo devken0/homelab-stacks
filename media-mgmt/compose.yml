@@ -199,18 +199,6 @@ services:
     ports:
       - 5000:5000
     restart: unless-stopped
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr:latest
-    container_name: prowlarr
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-    volumes:
-      - ./prowlarr:/config
-    ports:
-      - 9696:9696
-    restart: unless-stopped
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
