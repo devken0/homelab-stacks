@@ -112,6 +112,7 @@ services:
     volumes:
       - ./radarr:/config
       - ${MEDIA_PATH}/video/movies:/movies #optional
+      - ${MEDIA_PATH}/video/kids_movies:/kids_movies #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     ports:
       - 7878:7878
