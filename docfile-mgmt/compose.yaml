@@ -27,6 +27,10 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./syncthing:/config
+      - /mnt/backups:/data/backups
+      - /mnt/archives:/data/archives
+      - /mnt/media:/data/media
+      - ${NEXTCLOUD_DATA}:/data/nextcloud_files
     ports:
       - 8384:8384
       - 22000:22000/tcp
