@@ -7,14 +7,14 @@ services:
       ytdl_mongodb_connection_string: 'mongodb://ytdl-mongo-db:27017'
       ytdl_use_local_db: 'false'
       write_ytdl_config: 'true'
-      UID: ${PUID}
-      GID: ${PGID}
+      UID: ${NEXTCLOUD_DATA_UID}
+      GID: ${NEXTCLOUD_DATA_GID}
     restart: always
     depends_on:
       - ytdl-mongo-db
     volumes:
       - ./youtubedl-material/appdata:/app/appdata
-      - ${MEDIA_PATH}/audio/music:/app/audio
+      - ${MEDIA_PATH}/audio/web:/app/audio
       - ${MEDIA_PATH}/video/web:/app/video
       #- ${MEDIA_PATH}/ytdl/subscriptions:/app/subscriptions
       #- ${MEDIA_PATH}/ytdl/users:/app/users
@@ -59,7 +59,7 @@ services:
   navidrome:
     image: deluan/navidrome:latest
     container_name: navidrome
-    user: ${PUID}:${PGID} # should be owner of volumes
+    user: ${NEXTCLOUD_DATA_UID}:${NEXTCLOUD_DATA_GID} # should be owner of volumes
     ports:
       - "4533:4533"
     restart: unless-stopped
@@ -205,8 +205,8 @@ services:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+      - PUID=${NEXTCLOUD_DATA_UID}
+      - PGID=${NEXTCLOUD_DATA_GID}
       - TZ=${TIMEZONE}
     volumes:
       - ./lidarr:/config
