@@ -76,13 +76,3 @@ services:
     ports:
        - 9999:8080
     restart: unless-stopped
-  gotify:
-    image: gotify/server
-    container_name: gotify
-    ports:
-      - 8085:80
-    environment:
-      - GOTIFY_DEFAULTUSER_PASS=${GOTIFY_PASS}
-    volumes:
-      - "./gotify:/app/data"
-    restart: unless-stopped
