@@ -1,1 +1,21 @@
-
+---
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      #- PASSWORD=password #optional
+      #- HASHED_PASSWORD= #optional
+      #- SUDO_PASSWORD=password #optional
+      #- SUDO_PASSWORD_HASH= #optional
+      #- PROXY_DOMAIN=code.internal #optional
+      - DEFAULT_WORKSPACE=/config/docker-compose #optional
+    volumes:
+      - ./code-server:/config
+      - ~/docker-compose:/docker-compose
+    ports:
+      - 8448:8443
+    restart: unless-stopped

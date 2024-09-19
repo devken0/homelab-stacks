@@ -1,47 +1,98 @@
 ---
-# Docs - https://gethomepage.dev/latest/configs/settings/
+# https://gethomepage.dev/latest/configs/settings/
 
-title: My Awesome Homepage
-language: en-PH
-target: _blank # Possible options include _blank, _self, and _top
-headerStyle: underlined # underlined (default), boxed, clean, boxedWidgets  
-#base: http://host.local/homepage # for proxies, the URL must be a full, absolute URL, or it will be ignored by the browser.
-#startUrl: https://custom.url # required for installable apps, "/" by default.
-hideVersion: true
-#logpath: /logfile/path
-quicklaunch:
-  #searchDescriptions: true # off by default
-  hideInternetSearch: false # false by default
-  showSearchSuggestions: true 
-  hideVisitURL: false # off by default
+title: Mi Casa 
+
+#startUrl: https://custom.url
+
 background: 
-  image: https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80 
+  image: https://w.wallhaven.cc/full/zy/wallhaven-zyj28v.jpg
+  # blur, saturate, and brightness are incompatible with cardBlur
 #  blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
 #  saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
 #  brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
   opacity: 50 # 0-100
-cardBlur: sm # incompatible with background filters
+
+cardBlur: xl # sm, "", md, etc... see https://tailwindcss.com/docs/backdrop-blur 
+
 #favicon: https://www.google.com/favicon.ico
-theme: dark
-color: zinc # Supported colors are: slate, gray, zinc, neutral, stone, amber, yellow, lime, green, emerald, teal, cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose, red, white
+
+theme: dark # or light
+
+# Supported colors are: slate, gray, zinc, neutral, stone, amber, yellow, lime, green, emerald, teal, cyan, sky, 
+# blue, indigo, violet, purple, fuchsia, pink, rose, red, white
+color: neutral 
+
 layout:
-  #Documents & Files:
-  #Media:
-    style: row # or style: column
-    columns: 4 # or rows: X
-    header: false # section header 
+
+# Todo: Use Proxmox's Container/VM Groups as tabs
+# Infra, Files/Backups, Media/Content, Dev, Monitor, 
+
+  Virtualization/Containerization: 
+    tab: Infra 
+    style: row
+    columns: 2 
+    header: false 
+  Network: 
+    #tab: Admin
+    style: row
+    columns: 3
+    header: false 
+  Monitoring: 
+    #tab: Admin
+    style: row
+    columns: 3
+    header: false 
+  Apps:
+    #tab: Apps
+    style: row
+    columns: 4
+    header: false 
+  Backups: 
+    #tab: Admin
+    style: column
+    rows: 2
+    header: false
+  Web Servers:
+  Code Servers:
+    tab: Dev
+    style: column
+    rows: 1
+    header: false
+  Media Automation:
+    tab: Media/Content # without tab parameter, group will be visible on every tab.
+    style: row # or column
+    columns: 3 # or rows: X
+    header: false  
     #icon: https://cdn-icons-png.flaticon.com/512/252/252035.png 	
     #initiallyCollapsed: true # overrides global setting
     #useEqualHeights: true # overrides global setting
+  Media Libraries:
+    tab: Media/Content
+    style: row
+    columns: 3
+    header: false
+  
+  
 #iconStyle: theme # optional, defaults to gradient
-fiveColumns: true # four columns by default
+
+#fiveColumns: true # four columns by default
+
 disableCollapse: true # enabled by default
+
 groupsInitiallyCollapsed: false # disabled by default 
+
 useEqualHeights: true 
-showStats: false # docker stats
-statusStyle: "basic" # dot or basic
-#instanceName: public # name used by automatic docker service discovery to differentiate between multiple homepage instances.
-#hideErrors: true # hide widget error messages
+
+headerStyle: clean # underlined (default), boxed, clean, boxedWidgets  
+
+# For proxy configurations
+#base: http://host.local/homepage # The URL must be a full, absolute URL, or it will be ignored by the browser.
+
+language: en-PH
+
+target: _blank # Possible options include _blank, _self, and _top
+
 providers:
   openweathermap: openweathermapapikey
   weatherapi: weatherapiapikey
@@ -49,3 +100,29 @@ providers:
   #  url: https://longhorn.example.com
   #  username: admin
   #  password: LonghornPassword
+
+quicklaunch:
+  searchDescriptions: true # off by default
+  hideInternetSearch: false # false by default
+  showSearchSuggestions: true 
+  hideVisitURL: false # off by default
+  provider: duckduckgo
+
+# custom search
+#quicklaunch:  
+#  provider: custom
+#  url: https://www.ecosia.org/search?q=
+#  target: _blank
+#  suggestionUrl: https://ac.ecosia.org/autocomplete?type=list&q=
+
+hideVersion: true 
+
+#logpath: /logfile/path
+
+showStats: false # docker stats
+
+statusStyle: "dot" # dot or basic
+
+#instanceName: public # name used by automatic docker service discovery to differentiate between multiple homepage instances.
+
+#hideErrors: true # hide widget error messages

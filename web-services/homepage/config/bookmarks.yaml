@@ -1,18 +1,21 @@
 ---
-# For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/bookmarks
 
-- Developer:
-    - Github:
-        - icon: si-github-#ffffff
-          href: https://github.com/
+- Free Media:
+  - freemediaheckyeah:
+    - abbr: FM 
+      href: https://fmhy.xyz
+  #- walkxcode/dashboard-icons:
+  #  - icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github-light.png 
+  #    href: https://github.com/walkxcode/dashboard-icons/
+  
+- Favorite Tools:
+  - endoflife.date:
+    - abbr: ED 
+      href: https://endoflife.date
 
-- Social:
-    - Reddit:
-        - abbr: RE
-          href: https://reddit.com/
+- Major References:
+  - PrivacySpy:
+    - abbr: PS 
+      href: https://privacyspy.org/
 
-- Entertainment:
-    - YouTube:
-        - abbr: YT
-          href: https://youtube.com/

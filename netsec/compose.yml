@@ -22,6 +22,7 @@ services:
       - misc_default 
       - web-services_default
       - onlyoffice-nextcloud_default
+      - development_default
 networks:
   onlyoffice-nextcloud_default:
     external: true
@@ -35,5 +36,8 @@ networks:
     external: true 
   web-services_default:
     external: true
+  development_default:
+     external: true
+  
   
   

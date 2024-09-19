@@ -7,21 +7,6 @@ services:
     ports:
       - "8022:80"
     restart: unless-stopped
-  homepage:
-    image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
-    ports:
-      - 3009:3000
-    volumes:
-      - ./homepage/config:/app/config # Make sure your local config directory exists
-      #- ./homepage/images:/app/public/images # for setting background images
-      - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations, see alternative methods
-    environment:
-      PUID: ${PUID}
-      PGID: ${PGID}
-    env_file:
-      - ./homepage/.env
-    restart: unless-stopped
   wbo:
     image: lovasoa/wbo
     container_name: wbo
@@ -43,3 +28,41 @@ services:
     volumes:
       - ./picoshare:/data
     restart: unless-stopped
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 3009:3000
+    volumes:
+      - ./homepage/config:/app/config # Make sure your local config directory exists
+      #- ./homepage/images:/app/public/images # for setting background images
+      - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations, see alternative methods
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+    env_file: ./homepage/config/.env
+    restart: unless-stopped
+    networks:
+      - default
+      - docfile-mgmt_default
+      - media-mgmt_default
+      - monitoring_default
+      - misc_default
+      - onlyoffice-nextcloud_default
+      - development_default
+      - netsec_default
+networks:
+  onlyoffice-nextcloud_default:
+    external: true
+  docfile-mgmt_default:
+    external: true
+  media-mgmt_default:
+    external: true
+  monitoring_default:
+    external: true
+  misc_default:
+    external: true
+  development_default:
+     external: true
+  netsec_default:
+     external: true
