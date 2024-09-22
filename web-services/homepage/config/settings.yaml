@@ -26,53 +26,70 @@ color: neutral
 layout:
 
 # Todo: Use Proxmox's Container/VM Groups as tabs
-# Infra, Files/Backups, Media/Content, Dev, Monitor, 
+# Utilities, Misc
 
-  Virtualization/Containerization: 
+  Virtualization & Containerization: 
     tab: Infra 
     style: row
     columns: 2 
     header: false 
-  Network: 
-    #tab: Admin
+  Network & Security: 
+    tab: Infra 
+    style: row
+    columns: 3 
+    header: false 
+  System Monitoring: 
+    tab: Infra 
     style: row
     columns: 3
     header: false 
-  Monitoring: 
-    #tab: Admin
-    style: row
-    columns: 3
-    header: false 
-  Apps:
-    #tab: Apps
+  Utilities:
+    tab: Infra
+    style: column
+    rows: 3
+    header: false
+  Backup & Sync:
+    tab: Infra 
     style: row
     columns: 4
     header: false 
-  Backups: 
-    #tab: Admin
-    style: column
-    rows: 2
-    header: false
-  Web Servers:
-  Code Servers:
-    tab: Dev
-    style: column
-    rows: 1
-    header: false
-  Media Automation:
-    tab: Media/Content # without tab parameter, group will be visible on every tab.
+  Media Management:
+    tab: Media # without tab parameter, group will be visible on every tab.
     style: row # or column
     columns: 3 # or rows: X
     header: false  
     #icon: https://cdn-icons-png.flaticon.com/512/252/252035.png 	
     #initiallyCollapsed: true # overrides global setting
     #useEqualHeights: true # overrides global setting
-  Media Libraries:
-    tab: Media/Content
+  Media Acquisition:
+    tab: Media
     style: row
     columns: 3
     header: false
-  
+  Media Libraries:
+    tab: Media
+    style: row
+    columns: 3
+    header: false
+  Web Servers:
+    tab: Dev
+    style: column
+    rows: 1
+    header: false
+  Databases:
+    tab: Dev
+    style: column
+    rows: 1
+  Code Servers:
+    tab: Dev
+    style: column
+    rows: 1
+    header: false
+  Miscellaneous:
+    tab: Misc
+    style: column
+    rows: 3
+    header: false
   
 #iconStyle: theme # optional, defaults to gradient
 
