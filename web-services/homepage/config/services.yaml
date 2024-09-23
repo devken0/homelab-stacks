@@ -7,7 +7,6 @@
       href: {{HOMEPAGE_VAR_PROXMOX_SITE}}
       description: Hypervisor for KVM and LXCs
       ping: {{HOMEPAGE_VAR_PROXMOX_IP}}
-      statusStyle: "basic"
       widget: 
         type: proxmox
         url: {{HOMEPAGE_VAR_PROXMOX_URL}}
@@ -21,7 +20,6 @@
       description: Container management 
       server: local 
       container: portainer
-      statusStyle: "basic"
       widget:
         type: portainer
         url: {{HOMEPAGE_VAR_PORTAINER_URL}}
@@ -30,31 +28,33 @@
 
 - Network & Security: 
   - PiHole: 
-      icon: pi-hole 
+      icon: si-pi-hole-#b64ba5
       href: {{HOMEPAGE_VAR_PIHOLE_SITE}}
       description: Network-wide Ad Blocking and DNS.
       ping: {{HOMEPAGE_VAR_PIHOLE_IP}}
-      statusStyle: "basic" 
       widget: 
         type: pihole
         url: {{HOMEPAGE_VAR_PIHOLE_URL}}
         #version: 6 # required if running v6 or higher, defaults to 5
         key: {{HOMEPAGE_VAR_PIHOLE_API_KEY}}
-  - Vaultwarden:
-      icon: vaultwarden-light
-      href: {{HOMEPAGE_VAR_VAULTWARDEN_URL}}
-      description: Self-hosted Bitwarden server
-      #ping: {{HOMEPAGE_VAR_VAULTWARDEN_IP}}
-      siteMonitor: {{HOMEPAGE_VAR_VAULTWARDEN_URL}}
-      statusStyle: "basic"
-  
+  - Nginx Proxy Manager:
+      icon: si-nginxproxymanager-#b64ba5
+      href: {{HOMEPAGE_VAR_NPM_SITE}}
+      description: Reverse proxy and SSL
+      server: local
+      container: nginxproxymanager 
+      widget:
+        type: npm
+        url: {{HOMEPAGE_VAR_NPM_URL}}
+        username: {{HOMEPAGE_VAR_NPM_USERNAME}}
+        password: {{HOMEPAGE_VAR_NPM_PASSWORD}}
+
 - System Monitoring:
   - Uptime Kuma:
-      icon: si-uptimekuma-#5CDD8B
-      href: {{HOMEPAGE_VAR_UPTIMEKUMA_URL}}
+      icon: si-uptimekuma-#b64ba5
+      href: {{HOMEPAGE_VAR_UPTIMEKUMA_SITE}}
       description: Fancy self-hosted monitoring tool
       ping: {{HOMEPAGE_VAR_UPTIMEKUMA_IP}}
-      statusStyle: "basic"
       widget: 
         type: uptimekuma
         url: {{HOMEPAGE_VAR_UPTIMEKUMA_URL}}
@@ -64,44 +64,48 @@
       href: {{HOMEPAGE_VAR_GOTIFY_SITE}}
       description: Alert/Notification server
       ping: {{HOMEPAGE_VAR_GOTIFY_IP}}
-      statusStyle: "basic"
       widget:
         type: gotify
         url: {{HOMEPAGE_VAR_GOTIFY_URL}}
         key: {{HOMEPAGE_VAR_GOTIFY_CLIENT_TOKEN}}
 
+- Utilities: 
+  - Vaultwarden:
+      icon: si-vaultwarden-#b64ba5
+      href: {{HOMEPAGE_VAR_VAULTWARDEN_SITE}}
+      description: Self-hosted Bitwarden server
+      ping: {{HOMEPAGE_VAR_VAULTWARDEN_IP}}
+      siteMonitor: {{HOMEPAGE_VAR_VAULTWARDEN_SITE}}
+      statusStyle: ""
 - Backup & Sync:
   - IDrive: 
       icon: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogodix.com%2Flogo%2F1661157.png&f=1&nofb=1&ipt=c2d98563d371c259b4c9761b66addbeebca3b06d285a3178e7f8648e4cfe77d1&ipo=images 
-      href: {{HOMEPAGE_VAR_IDRIVE_URL}}
+      href: {{HOMEPAGE_VAR_IDRIVE_SITE}}
       description: IDrive Backup Server
       ping: {{HOMEPAGE_VAR_IDRIVE_IP}}
-      statusStyle: "basic"
 
 - Media Libraries:
   - Kavita:
       icon: kavita 
-      href: {{HOMEPAGE_VAR_KAVITA_URL}}
+      href: {{HOMEPAGE_VAR_KAVITA_SITE}}
       description: Digital library which supports a vast array of file formats.
       server: local
       container: kavita
-      statusStyle: "basic"
       widget:
         type: kavita
-        url: https://{{HOMEPAGE_VAR_KAVITA_IP}}:5000
+        url: {{HOMEPAGE_VAR_KAVITA_URL}}
         username: {{HOMEPAGE_VAR_KAVITA_USERNAME}}
         password: {{HOMEPAGE_VAR_KAVITA_PASSWORD}}
   - Audiobookshelf:
       icon: audiobookshelf 
-      href: http://abooks.internal
+      href: {{HOMEPAGE_VAR_AUDIOBOOKSHELF_SITE}}
       description: Audiobook and podcasts server
       server: local
       container: audiobookshelf
-      statusStyle: "basic"
       widget: 
         type: audiobookshelf
-        url: http://audiobookshelf:80
-        key: 
+        url: {{HOMEPAGE_VAR_AUDIOBOOKSHELF_URL}}
+        key: {{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}
 #    - Sonarr:
 #        icon: sonarr.png
 #        href: {{HOMEPAGE_VAR_SONARR_SITE}}

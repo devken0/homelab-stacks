@@ -36,7 +36,7 @@ layout:
   Network & Security: 
     tab: Infra 
     style: row
-    columns: 3 
+    columns: 2 
     header: false 
   System Monitoring: 
     tab: Infra 
@@ -45,8 +45,8 @@ layout:
     header: false 
   Utilities:
     tab: Infra
-    style: column
-    rows: 3
+    style: columns 
+    rows: 4 
     header: false
   Backup & Sync:
     tab: Infra 
@@ -99,7 +99,7 @@ disableCollapse: true # enabled by default
 
 groupsInitiallyCollapsed: false # disabled by default 
 
-useEqualHeights: true 
+useEqualHeights: false 
 
 headerStyle: clean # underlined (default), boxed, clean, boxedWidgets  
 
@@ -138,7 +138,7 @@ hideVersion: true
 
 showStats: false # docker stats
 
-statusStyle: "dot" # dot or basic
+statusStyle: "dot" # dot or basic, none is response time
 
 #instanceName: public # name used by automatic docker service discovery to differentiate between multiple homepage instances.
 
