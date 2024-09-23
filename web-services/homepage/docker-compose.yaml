@@ -1,0 +1,86 @@
+version: "3.8"
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 3002:3000
+    volumes:
+      - ./config:/app/config # Make sure your local config directory exists
+      #- ./homepage/images:/app/public/images # for setting background images
+      - /var/run/docker.sock:/var/run/docker.sock # (optional) For docker integrations, see alternative methods
+    environment:
+      PUID: ${PUID}
+      PGID: ${PGID}
+      HOMEPAGE_VAR_PROXMOX_SITE: ${HOMEPAGE_VAR_PROXMOX_SITE}
+      HOMEPAGE_VAR_PROXMOX_URL: ${HOMEPAGE_VAR_PROXMOX_URL}
+      HOMEPAGE_VAR_PROXMOX_IP: ${HOMEPAGE_VAR_PROXMOX_IP}
+      HOMEPAGE_VAR_PROXMOX_TOKEN_ID: ${HOMEPAGE_VAR_PROXMOX_TOKEN_ID}
+      HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET: ${HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}
+      
+      HOMEPAGE_VAR_PORTAINER_SITE: ${HOMEPAGE_VAR_PORTAINER_SITE}
+      HOMEPAGE_VAR_PORTAINER_URL: ${HOMEPAGE_VAR_PORTAINER_URL}
+      HOMEPAGE_VAR_PORTAINER_API_KEY: ${HOMEPAGE_VAR_PORTAINER_API_KEY}
+      
+      HOMEPAGE_VAR_PIHOLE_SITE: ${HOMEPAGE_VAR_PIHOLE_SITE}
+      HOMEPAGE_VAR_PIHOLE_IP: ${HOMEPAGE_VAR_PIHOLE_IP}
+      HOMEPAGE_VAR_PIHOLE_URL: ${HOMEPAGE_VAR_PIHOLE_URL}
+      HOMEPAGE_VAR_PIHOLE_API_KEY: ${HOMEPAGE_VAR_PIHOLE_API_KEY}
+      
+      HOMEPAGE_VAR_VAULTWARDEN_SITE: ${HOMEPAGE_VAR_VAULTWARDEN_SITE}
+      HOMEPAGE_VAR_VAULTWARDEN_IP: ${HOMEPAGE_VAR_VAULTWARDEN_IP}
+      
+      HOMEPAGE_VAR_UPTIMEKUMA_SITE: ${HOMEPAGE_VAR_UPTIMEKUMA_SITE}
+      HOMEPAGE_VAR_UPTIMEKUMA_IP: ${HOMEPAGE_VAR_UPTIMEKUMA_IP}
+      HOMEPAGE_VAR_UPTIMEKUMA_URL: ${HOMEPAGE_VAR_UPTIMEKUMA_URL}
+      
+      HOMEPAGE_VAR_GOTIFY_SITE: ${HOMEPAGE_VAR_GOTIFY_SITE}
+      HOMEPAGE_VAR_GOTIFY_URL: ${HOMEPAGE_VAR_GOTIFY_URL}
+      HOMEPAGE_VAR_GOTIFY_IP: ${HOMEPAGE_VAR_GOTIFY_IP}
+      HOMEPAGE_VAR_GOTIFY_CLIENT_TOKEN: ${HOMEPAGE_VAR_GOTIFY_CLIENT_TOKEN}
+      
+      HOMEPAGE_VAR_IDRIVE_SITE: ${HOMEPAGE_VAR_IDRIVE_SITE}
+      HOMEPAGE_VAR_IDRIVE_IP: ${HOMEPAGE_VAR_IDRIVE_IP}
+      
+      HOMEPAGE_VAR_KAVITA_SITE: ${HOMEPAGE_VAR_KAVITA_SITE}
+      HOMEPAGE_VAR_KAVITA_URL: ${HOMEPAGE_VAR_KAVITA_URL}
+      HOMEPAGE_VAR_KAVITA_USERNAME: ${HOMEPAGE_VAR_KAVITA_USERNAME}
+      HOMEPAGE_VAR_KAVITA_PASSWORD: ${HOMEPAGE_VAR_KAVITA_PASSWORD}
+      
+      HOMEPAGE_VAR_AUDIOBOOKSHELF_SITE: ${HOMEPAGE_VAR_AUDIOBOOKSHELF_SITE}
+      HOMEPAGE_VAR_AUDIOBOOKSHELF_URL: ${HOMEPAGE_VAR_AUDIOBOOKSHELF_URL}
+      HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY: ${HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}
+      
+      HOMEPAGE_VAR_NPM_SITE: ${HOMEPAGE_VAR_NPM_SITE}
+      HOMEPAGE_VAR_NPM_URL: ${HOMEPAGE_VAR_NPM_URL}
+      HOMEPAGE_VAR_NPM_USERNAME: ${HOMEPAGE_VAR_NPM_USERNAME}
+      HOMEPAGE_VAR_NPM_PASSWORD: ${HOMEPAGE_VAR_NPM_PASSWORD}
+    #env_file: ./homepage/config/.env
+    restart: unless-stopped
+    networks:
+      - default
+      - docfile-mgmt_default
+      - media-mgmt_default
+      - monitoring_default
+      - misc_default 
+      - web-services_default
+      - onlyoffice-nextcloud_default
+      - development_default
+      - netsec_default 
+networks:
+  netsec_default:
+    external: true
+  onlyoffice-nextcloud_default:
+    external: true
+  docfile-mgmt_default:
+    external: true 
+  media-mgmt_default:
+    external: true 
+  monitoring_default:
+    external: true 
+  misc_default:
+    external: true 
+  web-services_default:
+    external: true
+  development_default:
+     external: true

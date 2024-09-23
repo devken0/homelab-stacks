@@ -1,0 +1,30 @@
+---
+version: "3.8"
+services:
+  it-tools:
+    image: ghcr.io/corentinth/it-tools:latest
+    container_name: it-tools
+    ports:
+      - "8022:80"
+    restart: unless-stopped
+  wbo:
+    image: lovasoa/wbo
+    container_name: wbo
+    ports:
+      - 5005:80
+    volumes:
+      - ./wbo:/opt/app/server-data" 
+    restart: unless-stopped
+  picoshare:
+    image: mtlynch/picoshare
+    container_name: picoshare
+    environment:
+      - PORT=4001
+      - PS_SHARED_SECRET=${PICOSHARE_PASSWORD} # Change to any password
+      - PS_BEHIND_PROXY=true
+    ports:
+      - 4001:4001
+    command: -db /data/store.db
+    volumes:
+      - ./picoshare:/data
+    restart: unless-stopped
