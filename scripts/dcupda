@@ -2,8 +2,6 @@
 #docker compose --env-file ../.env pull
 #docker compose --env-file ../.env up -d 
 
-#!/usr/bin/env bash
-
 # Directories to search for docker-compose.yml files
 DIRECTORIES=("/root/docker-compose/development" "/root/docker-compose/docfile-mgmt" "/root/docker-compose/media-mgmt" "/root/docker-compose/misc" "/root/docker-compose/monitoring" "/root/docker-compose/netsec" "/root/docker-compose/web-services")  # Add your directories here
 ENV_DIR=/root/docker-compose/.env
