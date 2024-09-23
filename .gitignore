@@ -3,4 +3,7 @@
 */
 !*/*.yaml
 !*/*.yml
-web-services/homepage/config/logs/*
+*/*.log
+*/.log
+*/*.logs
+*.log
