@@ -1,6 +1,17 @@
 ---
 version: "3.8" 
 services:
+  filebrowser:
+    image: filebrowser/filebrowser
+    container_name: filebrowser
+    ports:
+      - "8088:80"
+    volumes:
+      - /:/srv
+      - ./filebrowser/filebrowser.db:/database.db
+      - ./filebrowser/filebrowser.json:/filebrowser.json
+    user: "${PUID}:${PGID}"
+    restart: unless-stopped
   libreoffice:
     image: lscr.io/linuxserver/libreoffice:latest
     container_name: libreoffice
