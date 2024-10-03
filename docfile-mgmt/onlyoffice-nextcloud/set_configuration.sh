@@ -46,6 +46,7 @@ docker exec -u www-data nextcloud php occ --no-warnings config:system:set enable
 docker exec -u www-data nextcloud php /var/www/nextcloud/occ preview:generate-all -vvv
 (crontab -l ; echo "*/10 * * * * docker exec -u www-data nextcloud php occ preview:pre-generate -vvv") | crontab -
 
+docker exec -u www-data nextcloud php occ --no-warnings app:install memories
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable activity 
 #docker exec -u www-data nextcloud php occ --no-warnings app:disable photos 
 docker exec -u www-data nextcloud php occ --no-warnings app:install calendar  
@@ -64,3 +65,5 @@ docker exec -u www-data nextcloud php occ files:scan --all -vvv
 # if php occ files:scan --all fails
 #docker exec -u www-data nextcloud chmod -R 755 /var/www/html/data
 #docker exec -u www-data nextcloud chown -R www-data:www-data /var/www/html/data
+
+docker exec -u www-data nextcloud php occ memories:index --user=USERNAME --folder=/path/
