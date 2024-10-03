@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Directories to search for docker-compose.yml files
+DIRECTORIES=("/root/docker-compose/development" "/root/docker-compose/docfile-mgmt" "/root/docker-compose/media-mgmt" "/root/docker-compose/misc" "/root/docker-compose/monitoring" "/root/docker-compose/netsec" "/root/docker-compose/web-services")  # Add your directories here
+ENV_DIR=/root/docker-compose/.env
+
+# Loop through each directory
+for DIR in "${DIRECTORIES[@]}"; do
+    if [ -f "$DIR/compose.yaml" ]; then
+        echo "Processing $DIR/compose.yaml"
+
+        # Update services
+        docker compose -f "$DIR/compose.yaml" --env-file $ENV_DIR up -d
+    else
+        echo "No compose.yaml found in $DIR"
+    fi
+done

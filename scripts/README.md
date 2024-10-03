@@ -10,3 +10,4 @@ Usage notes:
 2. dcupd - pull and update in current directory
 3. dcu - update in current directory
 4. dcp - pull in current directory
+5. dcua - script means update all
