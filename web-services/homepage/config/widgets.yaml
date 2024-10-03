@@ -22,14 +22,14 @@
 #    showSearchSuggestions: true
 #    target: _self 
 
-- resources:
+#- resources:
 #    cpu: true
 #    memory: true
 #    #disk: /disk/mount/path
 #    #cputemp: true
 #    #tempmin: 0 # optional, minimum cpu temp
 #    #tempmax: 100 # optional, maximum cpu temp
-    uptime: true
+#    uptime: true
 #    units: imperial # only used by cpu temp
 #    refresh: 3000 # optional, in ms
 #    diskUnits: bytes # optional, bytes (default) or bbytes. Only applies to disk

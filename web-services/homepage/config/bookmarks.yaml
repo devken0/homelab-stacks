@@ -13,8 +13,11 @@
   - endoflife.date:
     - abbr: ED 
       href: https://endoflife.date
+  - Helper-Scripts:
+    - abbr: TT
+      href: https://helper-scripts.com
 
-- Major References:
+- Top References:
   - PrivacySpy:
     - abbr: PS 
       href: https://privacyspy.org/

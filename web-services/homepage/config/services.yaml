@@ -69,28 +69,105 @@
         url: {{HOMEPAGE_VAR_GOTIFY_URL}}
         key: {{HOMEPAGE_VAR_GOTIFY_CLIENT_TOKEN}}
 
+- Backup & Sync:
+  - Nextcloud:
+      icon: si-nextcloud-#b64ba5
+      href: {{HOMEPAGE_VAR_NEXTCLOUD_SITE}}
+      #description: Self-hosted cloud
+      server: local
+      container: nextcloud
+      widget:
+        type: nextcloud
+        fields: ["cpuload", "freespace", "numfiles"] # ["cpuload", "memoryusage", "freespace", "activeusers", "numfiles", "numshares"].
+        url: {{HOMEPAGE_VAR_NEXTCLOUD_URL}}
+        #key: {{HOMEPAGE_VAR_NEXTCLOUD_TOKEN}} 
+        username: {{HOMEPAGE_VAR_NEXTCLOUD_USERNAME}}
+        password: {{HOMEPAGE_VAR_NEXTCLOUD_PASSWORD}}
+  - Proxmox Backup Server:
+      icon: si-proxmox-#b64ba5
+      href: {{HOMEPAGE_VAR_PBS_SITE}}
+      ping: {{HOMEPAGE_VAR_PBS_IP}}
+      widget:
+        type: proxmoxbackupserver
+        #fields: ["datastore_usage", "failed_tasks_24h", "cpu_usage", "memory_usage"]
+        url: {{HOMEPAGE_VAR_PBS_URL}}
+        username: {{HOMEPAGE_VAR_PBS_TOKEN_ID}}
+        password: {{HOMEPAGE_VAR_PBS_TOKEN_SECRET}} 
+  - Syncthing:
+      icon: si-syncthing-#b64ba5
+      href: {{HOMEPAGE_VAR_SYNCTHING_SITE}}
+      #description:
+      server: local
+      container: syncthing 
+  - IDrive Backup Server: 
+      icon: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogodix.com%2Flogo%2F1661157.png&f=1&nofb=1&ipt=c2d98563d371c259b4c9761b66addbeebca3b06d285a3178e7f8648e4cfe77d1&ipo=images 
+      href: {{HOMEPAGE_VAR_IDRIVE_SITE}}
+      #description: IDrive Backup Server
+      ping: {{HOMEPAGE_VAR_IDRIVE_IP}}
+
 - Utilities: 
   - Vaultwarden:
       icon: si-vaultwarden-#b64ba5
       href: {{HOMEPAGE_VAR_VAULTWARDEN_SITE}}
-      description: Self-hosted Bitwarden server
+      #description: Self-hosted Bitwarden server
       ping: {{HOMEPAGE_VAR_VAULTWARDEN_IP}}
       siteMonitor: {{HOMEPAGE_VAR_VAULTWARDEN_SITE}}
       statusStyle: ""
-- Backup & Sync:
-  - IDrive: 
-      icon: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogodix.com%2Flogo%2F1661157.png&f=1&nofb=1&ipt=c2d98563d371c259b4c9761b66addbeebca3b06d285a3178e7f8648e4cfe77d1&ipo=images 
-      href: {{HOMEPAGE_VAR_IDRIVE_SITE}}
-      description: IDrive Backup Server
-      ping: {{HOMEPAGE_VAR_IDRIVE_IP}}
+  - FileBrowser:
+      icon: filebrowser
+      href: {{HOMEPAGE_VAR_FILEBROWSER_SITE}}
+      server: local
+      container: filebrowser
+
+- Media Automation:
+  - Bazarr:
+      icon: bazarr
+      href: {{HOMEPAGE_VAR_BAZARR_SITE}}
+      description: Subtitles downloader 
+      server: local
+      container: bazarr
+      statusStyle: "dot"
+      widget: 
+        type: bazarr
+        url: {{HOMEPAGE_VAR_BAZARR_URL}}
+        key: {{HOMEPAGE_VAR_BAZARR_API_KEY}}
+  - Jellyseerr:
+      icon: jellyseerr
+      href: {{HOMEPAGE_VAR_JELLYSEERR_SITE}}
+      description: Media requests
+      server: local
+      container: jellyseerr
+      statusStyle: "dot"
+      widget:
+        type: jellyseerr
+        #fields: ["pending", "approved", "available"]
+        url: {{HOMEPAGE_VAR_JELLYSEERR_URL}}
+        key: {{HOMEPAGE_VAR_JELLYSEERR_API_KEY}}
 
 - Media Libraries:
+  - Jellyfin:
+      icon: jellyfin 
+      href: {{HOMEPAGE_VAR_JELLYFIN_SITE}}
+      description: Media server
+      ping: {{HOMEPAGE_VAR_JELLYFIN_IP}}
+      statusStyle: "dot"
+      widget:
+        type: jellyfin
+        #fields: ["movies", "series", "episodes", "songs"]
+        url: {{HOMEPAGE_VAR_JELLYFIN_URL}}
+        key: {{HOMEPAGE_VAR_JELLYFIN_API_KEY}}
+        enableBlocks: true # optional, defaults to false
+        enableNowPlaying: true # optional, defaults to true
+        enableUser: true # optional, defaults to false
+        showEpisodeNumber: true # optional, defaults to false
+        expandOneStreamToTwoRows: false # optional, defaults to true
   - Kavita:
       icon: kavita 
       href: {{HOMEPAGE_VAR_KAVITA_SITE}}
       description: Digital library which supports a vast array of file formats.
       server: local
       container: kavita
+      statusStyle: "dot"
       widget:
         type: kavita
         url: {{HOMEPAGE_VAR_KAVITA_URL}}
@@ -102,10 +179,18 @@
       description: Audiobook and podcasts server
       server: local
       container: audiobookshelf
+      statusStyle: "dot"
       widget: 
         type: audiobookshelf
         url: {{HOMEPAGE_VAR_AUDIOBOOKSHELF_URL}}
         key: {{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}
+- Miscellaneous:
+  - LibreOffice:
+      icon: libreoffice 
+      href: {{HOMEPAGE_VAR_LIBREOFFICE_SITE}}
+      server: local
+      container: libreoffice
+      statusStyle: "dot"
 #    - Sonarr:
 #        icon: sonarr.png
 #        href: {{HOMEPAGE_VAR_SONARR_SITE}}

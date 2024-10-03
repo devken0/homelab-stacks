@@ -8,12 +8,12 @@ title: Mi Casa
 background: 
   image: https://w.wallhaven.cc/full/zy/wallhaven-zyj28v.jpg
   # blur, saturate, and brightness are incompatible with cardBlur
-#  blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
-#  saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
-#  brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+  blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
+  saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+  brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
   opacity: 50 # 0-100
 
-cardBlur: xl # sm, "", md, etc... see https://tailwindcss.com/docs/backdrop-blur 
+#cardBlur: xl # sm, "", md, etc... see https://tailwindcss.com/docs/backdrop-blur 
 
 #favicon: https://www.google.com/favicon.ico
 
@@ -21,13 +21,11 @@ theme: dark # or light
 
 # Supported colors are: slate, gray, zinc, neutral, stone, amber, yellow, lime, green, emerald, teal, cyan, sky, 
 # blue, indigo, violet, purple, fuchsia, pink, rose, red, white
-color: neutral 
+color: purple 
 
 layout:
-
 # Todo: Use Proxmox's Container/VM Groups as tabs
 # Utilities, Misc
-
   Virtualization & Containerization: 
     tab: Infra 
     style: row
@@ -43,16 +41,16 @@ layout:
     style: row
     columns: 3
     header: false 
-  Utilities:
-    tab: Infra
-    style: columns 
-    rows: 4 
-    header: false
   Backup & Sync:
     tab: Infra 
     style: row
-    columns: 4
+    columns: 2 
     header: false 
+  Utilities:
+    tab: Infra
+    style: row 
+    columns: 2 
+    header: false
   Media Management:
     tab: Media # without tab parameter, group will be visible on every tab.
     style: row # or column
@@ -61,30 +59,30 @@ layout:
     #icon: https://cdn-icons-png.flaticon.com/512/252/252035.png 	
     #initiallyCollapsed: true # overrides global setting
     #useEqualHeights: true # overrides global setting
-  Media Acquisition:
+  Media Automation:
     tab: Media
     style: row
     columns: 3
-    header: false
+    header: tue 
   Media Libraries:
     tab: Media
     style: row
     columns: 3
-    header: false
-  Web Servers:
-    tab: Dev
-    style: column
-    rows: 1
-    header: false
-  Databases:
-    tab: Dev
-    style: column
-    rows: 1
-  Code Servers:
-    tab: Dev
-    style: column
-    rows: 1
-    header: false
+    header: true 
+  #Web Servers:
+  #  tab: Dev
+  #  style: column
+  #  rows: 1
+  #  header: false
+  #Databases:
+  #  tab: Dev
+  #  style: column
+  #  rows: 1
+  #Code Servers:
+  #  tab: Dev
+  #  style: column
+  #  rows: 1
+  #  header: false
   Miscellaneous:
     tab: Misc
     style: column
@@ -118,19 +116,20 @@ providers:
   #  username: admin
   #  password: LonghornPassword
 
-quicklaunch:
-  searchDescriptions: true # off by default
-  hideInternetSearch: false # false by default
-  showSearchSuggestions: true 
-  hideVisitURL: false # off by default
-  provider: duckduckgo
+#quicklaunch:
+#  searchDescriptions: true # off by default
+#  hideInternetSearch: false # false by default
+#  showSearchSuggestions: true 
+#  hideVisitURL: false # off by default
+#  provider: duckduckgo
 
 # custom search
-#quicklaunch:  
-#  provider: custom
-#  url: https://www.ecosia.org/search?q=
-#  target: _blank
-#  suggestionUrl: https://ac.ecosia.org/autocomplete?type=list&q=
+quicklaunch:  
+  provider: custom
+  url: {{HOMEPAGE_VAR_WHOOGLE_URL}}
+  target: _blank
+  suggestionUrl: {{HOMEPAGE_VAR_WHOOGLE_SUGGESTION_URL}}
+  showSearchSuggestions: true
 
 hideVersion: true 
 
@@ -138,7 +137,7 @@ hideVersion: true
 
 showStats: false # docker stats
 
-statusStyle: "dot" # dot or basic, none is response time
+statusStyle: "" # dot or basic, none is response time
 
 #instanceName: public # name used by automatic docker service discovery to differentiate between multiple homepage instances.
 
