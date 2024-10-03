@@ -15,7 +15,7 @@ services:
       # The URL prefix of Readeck.
       - READECK_SERVER_PREFIX=/
       # A list of hostnames allowed in HTTP requests. Required for reverse proxy configuration.
-      - READECK_ALLOWED_HOSTS=readeck.tecken.duckdns.org,readeck.tecken.lan
+      - READECK_ALLOWED_HOSTS=readeck.internal
       # Use the 'X-Forwarded-' headers. Required for reverse proxy configuration.
       - READECK_USE_X_FORWARDED=true
     volumes:
@@ -99,11 +99,12 @@ services:
   spotdl:
     image: "spotdl/spotify-downloader"
     container_name: spotdl
-    #command: web --host 0.0.0.0 --web-use-output-dir
-    #ports:
-    #  - 8810:8800
+    command: web --host 0.0.0.0 --web-use-output-dir
+    ports:
+      - 8810:8800
     volumes:
       - "${MEDIA_PATH}/audio/music:/music"
+    restart: unless-stopped
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -114,6 +115,8 @@ services:
     volumes:
       - "./sonarr:/config"
       - "${MEDIA_PATH}/video/tv_shows:/tv" #optional
+      - "${MEDIA_PATH}/video/kids/shows:/kids"
+      - "${MEDIA_PATH}/video/family/shows:/family"
       - "${DOWNLOADS_PATH}/torrents:/downloads" #optional
     ports:
       - 8989:8989
@@ -137,8 +140,8 @@ services:
     volumes:
       - ./radarr:/config
       - ${MEDIA_PATH}/video/movies:/movies #optional
-      - ${MEDIA_PATH}/video/kids_movies:/kids #optional
-      - ${MEDIA_PATH}/video/family_movies:/family #optional
+      - ${MEDIA_PATH}/video/kids/movies:/kids #optional
+      - ${MEDIA_PATH}/video/family/movies:/family #optional
       - ${DOWNLOADS_PATH}/torrents:/downloads #optional
     ports:
       - 7878:7878
@@ -185,6 +188,10 @@ services:
       - ./bazaarr:/config
       - ${MEDIA_PATH}/video/movies:/movies #optional
       - ${MEDIA_PATH}/video/tv_shows:/tv #optional
+      - ${MEDIA_PATH}/video/family/movies:/family/movies
+      - ${MEDIA_PATH}/video/family/shows:/family/shows
+      - ${MEDIA_PATH}/video/kids/movies:/kids/movies
+      - ${MEDIA_PATH}/video/kids/shows:/kids/shows
     ports:
       - 6767:6767
     restart: unless-stopped
