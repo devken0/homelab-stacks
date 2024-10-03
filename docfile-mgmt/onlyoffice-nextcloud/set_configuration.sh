@@ -59,3 +59,8 @@ docker exec -u www-data nextcloud php occ --no-warnings app:install external
 
 docker exec -it nextcloud /bin/bash -c "apt update && apt install -y ffmpeg imagemagick ghostscript"
 
+docker exec -u www-data nextcloud php occ files:scan --all -vvv
+
+# if php occ files:scan --all fails
+#docker exec -u www-data nextcloud chmod -R 755 /var/www/html/data
+#docker exec -u www-data nextcloud chown -R www-data:www-data /var/www/html/data
