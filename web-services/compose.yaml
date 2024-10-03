@@ -1,5 +1,42 @@
 ---
 services:
+  homebox:
+    image: ghcr.io/sysadminsmedia/homebox:latest
+#   image: ghcr.io/sysadminsmedia/homebox:latest-rootless
+    container_name: homebox
+    restart: unless-stopped 
+    environment:
+    - HBOX_LOG_LEVEL=info
+    - HBOX_LOG_FORMAT=text
+    - HBOX_WEB_MAX_UPLOAD_SIZE=10
+    volumes:
+      - homebox-data:/data/
+    ports:
+      - 3200:7745
+  grocy:
+    image: lscr.io/linuxserver/grocy:latest
+    container_name: grocy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./grocy/config:/config
+    ports:
+      - 9283:80
+    restart: unless-stopped
+  freshrss:
+    image: lscr.io/linuxserver/freshrss:latest
+    container_name: freshrss
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./freshrss/config:/config
+    ports:
+      - 87:80
+    restart: unless-stopped
   it-tools:
     image: ghcr.io/corentinth/it-tools:latest
     container_name: it-tools
@@ -27,3 +64,6 @@ services:
     volumes:
       - ./picoshare:/data
     restart: unless-stopped
+volumes:
+   homebox-data:
+     driver: local
