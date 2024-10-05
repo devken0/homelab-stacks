@@ -8,3 +8,4 @@
 */10 * * * * docker exec -u www-data nextcloud php occ preview:pre-generate -vvv
 */5 * * * * docker exec -u www-data nextcloud php occ files:scan --unscanned --all
 0/30 * * * * docker exec -u www-data nextcloud php occ memories:index --user=ken --folder=/Photos/
+*/5 * * * * docker exec -u www-data nextcloud php -f /var/www/html/cron.php
