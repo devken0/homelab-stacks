@@ -67,3 +67,4 @@ docker exec -u www-data nextcloud php occ files:scan --all -vvv
 #docker exec -u www-data nextcloud chown -R www-data:www-data /var/www/html/data
 
 docker exec -u www-data nextcloud php occ memories:index --user=USERNAME --folder=/path/
+docker exec -u www-data nextcloud php occ config:system:set maintenance_window_start --type=integer --value=1
