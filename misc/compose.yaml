@@ -1,0 +1,23 @@
+---
+services:
+  honeygain:
+    image: honeygain/honeygain
+    command: '-tou-accept -email "${HONEYGAIN_ACCOUNT_EMAIL}" -pass "${HONEYGAIN_ACCOUNT_PASSWORD}" -device hgcli_container_1'
+    environment:
+      - HONEYGAIN_ACCOUNT_EMAIL=${HONEYGAIN_ACCOUNT_EMAIL}
+      - HONEYGAIN_ACCOUNT_PASSWORD=${HONEYGAIN_ACCOUNT_PASSWORD}
+    restart: unless-stopped
+
+  remmina:
+    image: lscr.io/linuxserver/remmina:latest
+    container_name: remmina
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./remmina:/config
+    ports:
+      - 3005:3000
+      - 3006:3001
+    restart: unless-stopped
