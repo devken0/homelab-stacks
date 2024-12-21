@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-#docker compose --env-file ../.env pull
-#docker compose --env-file ../.env up -d 
 
 # Directories to search for docker-compose.yml files
 DIRECTORIES=("/root/docker-compose/development" "/root/docker-compose/docfile-mgmt" "/root/docker-compose/media-mgmt" "/root/docker-compose/misc" "/root/docker-compose/monitoring" "/root/docker-compose/netsec" "/root/docker-compose/web-services")  # Add your directories here
@@ -18,5 +16,23 @@ for DIR in "${DIRECTORIES[@]}"; do
         docker compose -f "$DIR/compose.yaml" --env-file $ENV_DIR up -d
     else
         echo "No compose.yaml found in $DIR"
+    fi
+done
+
+# For docker containers without env file
+NO_ENV_DIRS=("/root/docker-compose/docfile-mgmt/onlyoffice-nextcloud" "/root/docker-compose/web-services/homepage")
+
+for DIR in "${NO_ENV_DIRS[@]}"; do
+    if [ -f "$DIR/docker-compose.yml" ]; then
+        echo "Processing $DIR/docker-compose.yml"
+        
+	# Pull images
+	docker compose -f "$DIR/docker-compose.yml" pull
+
+	# Update services
+	docker compose -f "$DIR/docker-compose.yml" up -d
+
+    else
+	echo "No docker-compose.yml found in $DIR"
     fi
 done
