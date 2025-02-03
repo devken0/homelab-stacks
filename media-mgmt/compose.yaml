@@ -39,8 +39,8 @@ services:
       - ytdl-mongo-db
     volumes:
       - ./youtubedl-material/appdata:/app/appdata
-      - ${MEDIA_PATH}/audio/web:/app/audio
-      - ${MEDIA_PATH}/video/web:/app/video
+      - ${DOWNLOADS_PATH}/ytdl/audio:/app/audio
+      - ${DOWNLOADS_PATH}/ytdl/video:/app/video
       #- ${MEDIA_PATH}/ytdl/subscriptions:/app/subscriptions
       #- ${MEDIA_PATH}/ytdl/users:/app/users
     ports:
