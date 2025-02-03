@@ -23,10 +23,7 @@ services:
       - onlyoffice-nextcloud_default
       - development_default
       - homepage_default
-      - stash_default
 networks:
-  stash_default:
-    external: true
   homepage_default:
     external: true
   onlyoffice-nextcloud_default:
@@ -43,6 +40,3 @@ networks:
     external: true
   development_default:
      external: true
-  
-  
-  
