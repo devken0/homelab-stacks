@@ -23,6 +23,7 @@ services:
       - onlyoffice-nextcloud_default
       - development_default
       - homepage_default
+      - actualbudget_default
 networks:
   homepage_default:
     external: true
@@ -39,4 +40,6 @@ networks:
   web-services_default:
     external: true
   development_default:
+     external: true
+  actualbudget_default:
      external: true
