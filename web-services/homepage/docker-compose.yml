@@ -3,7 +3,7 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     ports:
-      - 4010:3000
+      - 4009:3000
     volumes:
       - ./config:/app/config # Make sure your local config directory exists
       #- ./homepage/images:/app/public/images # for setting background images
