@@ -1,12 +1,15 @@
 ---
 services:
-  standalone-chrome-debug: 
-    image: selenium/standalone-chrome-debug:3.141.59
-    shm_size: 2g
+  # for changedetection 
+  browserless:
+    image: ghcr.io/browserless/chromium
+    environment:
+      - CURRENT=10
+      - TOKEN=6R0W53R135510
+    ports:
+      - 3330:3000
+    container_name: browserless
     restart: unless-stopped
-    container_name: selenium
-    volumes:
-      - /dev/shm:/dev/shm
   portainer:
     image: portainer/portainer-ce
     container_name: portainer
@@ -57,7 +60,7 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
       - BASE_URL= #optional
-      - PLAYWRIGHT_DRIVER_URL="http://selenium:4444/wd/hub" #optional
+      - PLAYWRIGHT_DRIVER_URL="ws://browserless:3000?token=6R0W53R135510" #optional
     volumes:
       - ./changedetection.io:/config
     ports:
