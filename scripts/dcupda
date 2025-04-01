@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Directories to search for docker-compose.yml files
-DIRECTORIES=("/root/compose-hub/development" "/root/compose-hub/docfile-mgmt" "/root/compose-hub/media-mgmt" "/root/compose-hub/misc" "/root/compose-hub/monitoring" "/root/compose-hub/netsec" "/root/compose-hub/web-services")  # Add your directories here
-ENV_DIR=/root/compose-hub/.env
+DIRECTORIES=("/root/homelab-stacks/development" "/root/homelab-stacks/docfile-mgmt" "/root/homelab-stacks/media-mgmt" "/root/homelab-stacks/misc" "/root/homelab-stacks/monitoring" "/root/homelab-stacks/netsec" "/root/homelab-stacks/web-services")  # Add your directories here
+ENV_DIR=/root/homelab-stacks/.env
 
 # Loop through each directory
 for DIR in "${DIRECTORIES[@]}"; do
@@ -20,7 +20,7 @@ for DIR in "${DIRECTORIES[@]}"; do
 done
 
 # For docker containers without env file
-NO_ENV_DIRS=("/root/compose-hub/monitoring/actualbudget" "/root/compose-hub/docfile-mgmt/onlyoffice-nextcloud" "/root/compose-hub/web-services/homepage")
+NO_ENV_DIRS=("/root/homelab-stacks/monitoring/actualbudget" "/root/homelab-stacks/docfile-mgmt/onlyoffice-nextcloud" "/root/homelab-stacks/web-services/homepage")
 
 for DIR in "${NO_ENV_DIRS[@]}"; do
     if [ -f "$DIR/docker-compose.yml" ]; then
