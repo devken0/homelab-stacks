@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-ln -s /root/compose-hub/scripts/dcp /usr/bin/dcp
-ln -s /root/compose-hub/scripts/dcu /usr/bin/dcu
-ln -s /root/compose-hub/scripts/dcua /usr/bin/dcua
-ln -s /root/compose-hub/scripts/dcupd /usr/bin/dcupd
-ln -s /root/compose-hub/scripts/dcupda /usr/bin/dcupda
-ln -s /root/compose-hub/scripts/spotdl /usr/bin/spotdl
+# Make sure to use absolute paths
+SCRIPTS_PATH=/root/homelab-stacks/scripts
+BIN_PATH=/usr/bin
+SCRIPT_FILES=("dcu" "dcp" "dcua" "dcupd" "dcupda" "spotdl")
+
+for FILE in "${SCRIPT_FILES[@]}"; do	  
+    ln -s $SCRIPTS_PATH/$FILE $BIN_PATH/$FILE
+done
 
