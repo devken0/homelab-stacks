@@ -1,6 +1,6 @@
 #!/bin/bash
 
-compose_directory="/root/docker-compose/media-mgmt"
+compose_directory="/root/compose-hub/media-mgmt"
 
 # Check if at least one URL argument is provided
 if [ $# -eq 0 ]; then

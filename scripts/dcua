@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Directories to search for docker-compose.yml files
-DIRECTORIES=("/root/docker-compose/development" "/root/docker-compose/docfile-mgmt" "/root/docker-compose/media-mgmt" "/root/docker-compose/misc" "/root/docker-compose/monitoring" "/root/docker-compose/netsec" "/root/docker-compose/web-services")  # Add your directories here
-ENV_DIR=/root/docker-compose/.env
+DIRECTORIES=("/root/compose-hub/development" "/root/compose-hub/docfile-mgmt" "/root/compose-hub/media-mgmt" "/root/compose-hub/misc" "/root/compose-hub/monitoring" "/root/compose-hub/netsec" "/root/compose-hub/web-services")  # Add your directories here
+ENV_DIR=/root/compose-hub/.env
 
 # Loop through each directory
 for DIR in "${DIRECTORIES[@]}"; do
