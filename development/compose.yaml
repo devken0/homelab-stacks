@@ -19,10 +19,10 @@ services:
       #- SUDO_PASSWORD=password #optional
       #- SUDO_PASSWORD_HASH= #optional
       #- PROXY_DOMAIN=code.internal #optional
-      - DEFAULT_WORKSPACE=/config/docker-compose #optional
+      #- DEFAULT_WORKSPACE= #optional
     volumes:
       - ./code-server:/config
-      - ~/docker-compose:/docker-compose
+      - ${HOMELAB_STACKS_DIR}:/homelab-stacks
     ports:
       - 8448:8443
     restart: unless-stopped
