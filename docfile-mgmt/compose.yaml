@@ -1,5 +1,15 @@
 ---
 services:
+  silverbullet:
+    image: ghcr.io/silverbulletmd/silverbullet:v2
+    restart: unless-stopped
+    environment:
+    - SB_USER=admin:${SB_ADMIN_PASSWORD}
+    volumes:
+      - ./silverbullet/space:/space
+    ports:
+      - ${SB_HOST_PORT}:3000
+
   filebrowser:
     image: filebrowser/filebrowser
     container_name: filebrowser
