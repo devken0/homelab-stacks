@@ -4,8 +4,9 @@ services:
     command: >
       sh -c "echo 'deb http://kartolo.sby.datautama.net.id/debian bookworm main contrib
       deb http://kartolo.sby.datautama.net.id/debian bookworm-updates main contrib
-      deb http://kartolo.sby.datautama.net.id/debian-security bookworm-security main contrib' | tee /etc/apt/sources.list > /dev/null &&
-      apt update && apt install -y ffmpeg imagemagick ghostscript && exec php-fpm"
+      deb http://kartolo.sby.datautama.net.id/debian-security bookworm-security main contrib' > /etc/apt/sources.list &&
+      apt update && apt install -y ffmpeg imagemagick ghostscript && 
+      exec php-fpm"
     container_name: nextcloud 
     restart: always
     expose:
