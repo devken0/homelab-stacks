@@ -69,22 +69,6 @@ services:
     environment:
       - DOCKER_ENABLE_SECURITY=false
     restart: unless-stopped
-  duplicati:
-    image: lscr.io/linuxserver/duplicati:latest
-    container_name: duplicati
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-      - CLI_ARGS= #optional
-    volumes:
-      - ./duplicati:/config
-      - ${DUPLICATI_BACKUP_PATH}:/backups
-      - ${DUPLICATI_SOURCE_PATH}:/source
-      #- /mnt/directory:/data # additional directories to backup 
-    ports:
-      - 8200:8200
-    restart: unless-stopped
   wikijs:
     image: lscr.io/linuxserver/wikijs:latest
     container_name: wikijs
