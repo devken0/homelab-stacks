@@ -171,6 +171,7 @@ services:
     volumes:
       - ./deluge:/config
       - ${DOWNLOADS_PATH}/torrents:/downloads
+      - ${ISO_PATH}:/iso
     ports:
       - 8112:8112
       - 6881:6881
