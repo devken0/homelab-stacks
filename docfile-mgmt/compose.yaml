@@ -17,8 +17,8 @@ services:
       - "8088:80"
     volumes:
       - /:/srv
-      - ./filebrowser/filebrowser.db:/database.db
-      - ./filebrowser/filebrowser.json:/filebrowser.json
+      - ./filebrowser/db:/database
+      - ./filebrowser/config:/config
     user: "${PUID}:${PGID}"
     restart: unless-stopped
   libreoffice:
