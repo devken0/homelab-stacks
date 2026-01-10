@@ -1,5 +1,14 @@
 ---
 services:
+  jdownloader-2:
+    container_name: jdownloader-2
+    image: jlesage/jdownloader-2
+    ports:
+      - "5800:5800"
+    volumes:
+      - "./jdownloader-2:/config:rw"
+      - "${DOWNLOADS_PATH}/jdl:/output:rw"
+    restart: unless-stopped
   readeck:
     image: codeberg.org/readeck/readeck:latest
     container_name: readeck
