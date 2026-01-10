@@ -1,7 +1,28 @@
 ---
 services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    container_name: obsidian
+    #security_opt:
+    #  - seccomp:unconfined #optional
+    environment:
+      - PUID=${NEXTCLOUD_DATA_UID}
+      - PGID=${NEXTCLOUD_DATA_GID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./obsidian:/config
+      - ${NEXTCLOUD_DATA}/PKMS:/data
+    ports:
+      - 3009:3000
+      - 3010:3001
+    #devices:
+    #  - /dev/dri:/dev/dri #optional
+    shm_size: "1gb"
+    restart: unless-stopped
+
   silverbullet:
     image: ghcr.io/silverbulletmd/silverbullet:v2
+    container_name: silverbullet
     restart: unless-stopped
     environment:
     - SB_USER=admin:${SB_ADMIN_PASSWORD}
@@ -9,17 +30,18 @@ services:
       - ./silverbullet/space:/space
     ports:
       - ${SB_HOST_PORT}:3000
-
   filebrowser:
-    image: filebrowser/filebrowser
+    image: filebrowser/filebrowser:s6
     container_name: filebrowser
-    ports:
-      - "8088:80"
+    ports: 
+      - '8088:80'
+    environment: 
+      - PGID=${PGID}
+      - PUID=${PUID}
     volumes:
-      - /:/srv
-      - ./filebrowser/db:/database
-      - ./filebrowser/config:/config
-    user: "${PUID}:${PGID}"
+      - './filebrowser/config:/config'
+      - './filebrowser/database:/database'
+      - '/:/srv'
     restart: unless-stopped
   libreoffice:
     image: lscr.io/linuxserver/libreoffice:latest
