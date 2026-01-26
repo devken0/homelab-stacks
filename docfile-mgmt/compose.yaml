@@ -19,17 +19,6 @@ services:
     #  - /dev/dri:/dev/dri #optional
     shm_size: "1gb"
     restart: unless-stopped
-
-  silverbullet:
-    image: ghcr.io/silverbulletmd/silverbullet:v2
-    container_name: silverbullet
-    restart: unless-stopped
-    environment:
-    - SB_USER=admin:${SB_ADMIN_PASSWORD}
-    volumes:
-      - ./silverbullet/space:/space
-    ports:
-      - ${SB_HOST_PORT}:3000
   filebrowser:
     image: filebrowser/filebrowser:s6
     container_name: filebrowser
@@ -42,22 +31,6 @@ services:
       - './filebrowser/config:/config'
       - './filebrowser/database:/database'
       - '/:/srv'
-    restart: unless-stopped
-  libreoffice:
-    image: lscr.io/linuxserver/libreoffice:latest
-    container_name: libreoffice
-    security_opt:
-      - seccomp:unconfined #optional
-    environment:
-      - PUID=${NEXTCLOUD_DATA_UID}
-      - PGID=${NEXTCLOUD_DATA_GID}
-      - TZ=${TIMEZONE}
-    volumes:
-      - ./libreoffice:/config
-      - ${NEXTCLOUD_DATA}/Documents:/data
-    ports:
-      - 3300:3000
-      - 3100:3001
     restart: unless-stopped
   syncthing:
     image: lscr.io/linuxserver/syncthing:latest
@@ -90,23 +63,4 @@ services:
     #  - /location/of/customFiles:/customFiles/
     environment:
       - DOCKER_ENABLE_SECURITY=false
-    restart: unless-stopped
-  wikijs:
-    image: lscr.io/linuxserver/wikijs:latest
-    container_name: wikijs
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-      - DB_TYPE=sqlite #optional
-      - DB_HOST= #optional
-      - DB_PORT= #optional
-      - DB_NAME= #optional
-      - DB_USER= #optional
-      - DB_PASS= #optional
-    volumes:
-      - ./wikijs/config:/config
-      - ./wikijs/data:/data
-    ports:
-      - 3000:3000
     restart: unless-stopped
