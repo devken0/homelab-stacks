@@ -1,0 +1,17 @@
+services:
+  libreoffice:
+    image: lscr.io/linuxserver/libreoffice:latest
+    container_name: libreoffice
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=${NEXTCLOUD_DATA_UID}
+      - PGID=${NEXTCLOUD_DATA_GID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./libreoffice:/config
+      - ${NEXTCLOUD_DATA}/Documents:/data
+    ports:
+      - 3300:3000
+      - 3100:3001
+    restart: unless-stopped

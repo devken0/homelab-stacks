@@ -1,0 +1,8 @@
+services:
+  ja7ad:
+    # image: ja7adr/w3schools:latest (docker login && docker pull)
+    image: c1f2319e7235
+    container_name: w3schools
+    ports:
+      - '88:80'
+    restart: unless-stopped
