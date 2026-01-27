@@ -1,0 +1,37 @@
+services:
+  freshrss:
+    image: lscr.io/linuxserver/freshrss:latest
+    container_name: freshrss
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TIMEZONE}
+    volumes:
+      - ./freshrss/config:/config
+    ports:
+      - 87:80
+    restart: unless-stopped
+  homebox:
+    image: ghcr.io/sysadminsmedia/homebox:latest
+#   image: ghcr.io/sysadminsmedia/homebox:latest-rootless
+    container_name: homebox
+    restart: unless-stopped 
+    environment:
+    - HBOX_LOG_LEVEL=info
+    - HBOX_LOG_FORMAT=text
+    - HBOX_WEB_MAX_UPLOAD_SIZE=10
+    volumes:
+      - homebox-data:/data/
+    ports:
+      - 3200:7745
+  wbo:
+    image: lovasoa/wbo
+    container_name: wbo
+    ports:
+      - 5005:80
+    volumes:
+      - ./wbo:/opt/app/server-data" 
+    restart: unless-stopped
+volumes:
+   homebox-data:
+     driver: local
