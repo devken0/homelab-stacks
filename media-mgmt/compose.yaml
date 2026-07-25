@@ -1,5 +1,15 @@
 ---
 services:
+  jdownloader-2:
+    image: jlesage/jdownloader-2:latest
+    container_name: jdownloader
+    ports:
+      - "5800:5800"
+    volumes:
+      - "./jdownloader/config:/config:rw"
+      - "${DOWNLOADS_PATH}/jdownloader:/output:rw"
+    restart: unless-stopped
+
   ytdl_material:
     container_name: ytdl_material
     environment:
@@ -44,16 +54,24 @@ services:
     ports:
       - 9117:9117
     restart: unless-stopped
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seerr
     environment:
       - LOG_LEVEL=debug
       - TZ=${TIMEZONE}
+      #- PORT=5055 #optional
     ports:
       - 5055:5055
     volumes:
-      - ./jellyseerr:/app/config
+      - ./seerr//config:/app/config
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+      retries: 3
     restart: unless-stopped
   navidrome:
     image: deluan/navidrome:latest
