@@ -35,22 +35,3 @@ services:
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
     image: willfarrell/autoheal
-  watchtower:
-    container_name: watchtower
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock 
-    environment:
-      TZ: ${TIMEZONE}
-      WATCHTOWER_REMOVE_VOLUMES: "true"
-      WATCHTOWER_CLEANUP: "true"
-      WATCHTOWER_INCLUDE_STOPPED: "true"
-      WATCHTOWER_POLL_INTERVAL: ${WATCHTOWER_INTERVAL}
-      WATCHTOWER_TIMEOUT: 15
-      WATCHTOWER_NOTIFICATIONS_LEVEL: info
-      WATCHTOWER_HTTP_API_METRICS: "true"
-      WATCHTOWER_HTTP_API_TOKEN: ${WATCHTOWER_API_TOKEN}
-      WATCHTOWER_NOTIFICATIONS: shoutrrr
-      # Using Pushbullet, telegram and pushover as examples, but just pick one
-      # WATCHTOWER_NOTIFICATION_URL: "pushover://shoutrrr:$PUSHOVER_APP_API__SECRET@$PUSHOVER_USER_API__SECRET/?devices=$PUSHOVER_DEVICE telegram://$TELEGRAM_BOT_TOKEN__SECRET@telegram?channels=$TELEGRAM_CHAT_ID__SECRET pushbullet://$PUSHBULLET_API__SECRET"
-    restart: always
