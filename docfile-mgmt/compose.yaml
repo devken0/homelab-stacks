@@ -24,7 +24,6 @@ services:
     volumes:
       - ./syncthing:/config
       - /mnt/backups:/data/backups
-      - /mnt/archives:/data/archives
       - /mnt/media:/data/media
       - ${NEXTCLOUD_DATA}:/data/nextcloud_files
     ports:
